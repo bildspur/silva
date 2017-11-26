@@ -1,3 +1,9 @@
 .pioenvs
 .piolibdeps
 CMakeListsPrivate.txt
+.clang_complete
+.gcc-flags.json
+cmake-build-debug
+.idea/misc.xml
+.idea/serialmonitor_settings.xml
+.idea/vcs.xml
