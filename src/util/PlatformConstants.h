@@ -5,6 +5,8 @@
 #ifndef SILVA_PLATFORMCONSTANTS_H
 #define SILVA_PLATFORMCONSTANTS_H
 
+// typedefs
+typedef BaseController* BaseControllerPtr;
 
 // NodeMCU Digital Pins
 #define D0  16

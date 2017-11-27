@@ -15,15 +15,15 @@
 
 class NetworkController : public BaseController {
 private:
-    char *deviceName;
-    char *ssid;
-    char *password;
+    const char *deviceName;
+    const char *ssid;
+    const char *password;
 
     void setupAP();
     void setupMDNS();
 
 public:
-    NetworkController(char *deviceName, char *ssid, char *password);
+    NetworkController(const char *deviceName, const char *ssid, const char *password);
 
     void setup() override;
     void loop() override;

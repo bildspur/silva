@@ -4,7 +4,7 @@
 
 #include "NetworkController.h"
 
-NetworkController::NetworkController(char *deviceName, char *ssid, char *password) {
+NetworkController::NetworkController(const char *deviceName, const char *ssid, const char *password) {
     this->deviceName = deviceName;
     this->ssid = ssid;
     this->password = password;

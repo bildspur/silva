@@ -1,7 +1,6 @@
 //
 // Created by Florian on 27.11.17.
 //
-
 #ifndef SILVA_OTACONTROLLER_H
 #define SILVA_OTACONTROLLER_H
 
@@ -10,8 +9,8 @@
 
 class OTAController : public BaseController {
 private:
-    char *deviceName;
-    char *password;
+    const char *deviceName;
+    const char *password;
     uint16_t port;
 
     void setupOTAOnError();
@@ -25,7 +24,7 @@ private:
     void setupOTAAuth();
 
 public:
-    OTAController(char *deviceName, char *password, uint16_t port);
+    OTAController(const char *deviceName, const char *password, uint16_t port);
 
     void setup() override;
 

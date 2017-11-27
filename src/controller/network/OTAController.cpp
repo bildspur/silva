@@ -1,10 +1,9 @@
 //
 // Created by Florian on 27.11.17.
 //
-
 #include "OTAController.h"
 
-OTAController::OTAController(char *deviceName, char *password, uint16_t port) {
+OTAController::OTAController(const char *deviceName, const char *password, uint16_t port) {
     this->deviceName = deviceName;
     this->password = password;
     this->port = port;
