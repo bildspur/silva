@@ -12,7 +12,7 @@ class OTAController : public BaseController {
 private:
     char *deviceName;
     char *password;
-    uint8_t port;
+    uint16_t port;
 
     void setupOTAOnError();
 
@@ -25,7 +25,7 @@ private:
     void setupOTAAuth();
 
 public:
-    OTAController(char *deviceName, char *password, uint8_t port);
+    OTAController(char *deviceName, char *password, uint16_t port);
 
     void setup() override;
 
