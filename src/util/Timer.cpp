@@ -8,7 +8,7 @@ Timer::Timer(unsigned long waitTime) {
     this->waitTime = waitTime;
 }
 
-boolean Timer::elapsed() {
+bool Timer::elapsed() {
     unsigned long currentMillis = millis();
     bool result = currentMillis - previousMillis >= waitTime;
 

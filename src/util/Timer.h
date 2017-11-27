@@ -15,7 +15,7 @@ private:
 public:
     explicit Timer(unsigned long waitTime);
 
-    boolean elapsed();
+    bool elapsed();
 };
 
 
