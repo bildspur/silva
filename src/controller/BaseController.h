@@ -7,7 +7,8 @@
 
 
 class BaseController {
-private:
+
+protected:
     BaseController();
 
 public:

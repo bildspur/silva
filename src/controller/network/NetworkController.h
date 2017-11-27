@@ -5,15 +5,30 @@
 #ifndef SILVA_NETWORKCONTROLLER_H
 #define SILVA_NETWORKCONTROLLER_H
 
+#include <ESP8266WiFi.h>
+#include <WiFiClient.h>
+#include <WiFiUdp.h>
+#include <ESP8266mDNS.h>
+#include <IPAddress.h>
 
 #include <controller/BaseController.h>
 
 class NetworkController : public BaseController {
 private:
+    char *deviceName;
+    char *ssid;
+    char *password;
+
+    void setupAP();
+    void setupMDNS();
 
 public:
+    NetworkController(char *deviceName, char *ssid, char *password);
+
     void setup() override;
     void loop() override;
+
+    void printNetworkInformation();
 };
 
 
