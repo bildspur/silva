@@ -29,6 +29,10 @@ public:
     void update();
 
     void setBrightness(uint8_t value);
+
+    uint8_t getBrightness();
+
+    uint8_t getId();
 };
 
 

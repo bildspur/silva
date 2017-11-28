@@ -16,3 +16,11 @@ void Leaf::update() {
 void Leaf::setBrightness(uint8_t value) {
     brightness.setTarget(value);
 }
+
+uint8_t Leaf::getBrightness() {
+    return static_cast<uint8_t>(brightness.getInt());
+}
+
+uint8_t Leaf::getId() {
+    return id;
+}
