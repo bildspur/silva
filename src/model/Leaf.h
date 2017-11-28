@@ -28,7 +28,7 @@ public:
 
     void update();
 
-    void setBrightness(uint8_t value);
+    void setBrightness(uint8_t value, bool easing = true);
 
     uint8_t getBrightness();
 

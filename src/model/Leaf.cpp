@@ -13,8 +13,11 @@ void Leaf::update() {
     brightness.update();
 }
 
-void Leaf::setBrightness(uint8_t value) {
-    brightness.setTarget(value);
+void Leaf::setBrightness(uint8_t value, bool easing) {
+    if (easing)
+        brightness.setTarget(value);
+    else
+        brightness.set(value);
 }
 
 uint8_t Leaf::getBrightness() {
