@@ -2,7 +2,7 @@
 #include <ESP8266mDNS.h>
 #include <controller/BaseController.h>
 #include <controller/network/NetworkController.h>
-//#include <controller/network/OTAController.h>
+#include <controller/network/OTAController.h>
 #include <controller/network/OscController.h>
 #include "util/PlatformConstants.h"
 
@@ -25,12 +25,12 @@
 
 // controllers
 auto network = NetworkController(DEVICE_NAME, SSID_NAME, SSID_PASSWORD);
-//auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
+auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
 
 BaseControllerPtr controllers[] = {
         &network,
-        //&ota,
+        &ota,
         &osc
 };
 
