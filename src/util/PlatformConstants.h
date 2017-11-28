@@ -6,6 +6,7 @@
 #define SILVA_PLATFORMCONSTANTS_H
 
 #include <model/Leaf.h>
+#include <controller/scene/BaseScene.h>
 
 // typedefs
 typedef BaseController* BaseControllerPtr;

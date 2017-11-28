@@ -4,7 +4,9 @@
 
 #include "InteractionScene.h"
 
-InteractionScene::InteractionScene(LeafPtr *leafs) : BaseScene(leafs) {}
+InteractionScene::InteractionScene(LightSensor *lightSensor, LeafPtr *leafs) : BaseScene(leafs) {
+    this->lightSensor = lightSensor;
+}
 
 void InteractionScene::setup() {
     BaseScene::setup();

@@ -7,7 +7,9 @@
 
 
 #include <controller/BaseController.h>
-#include <util/PlatformConstants.h>
+#include <model/Leaf.h>
+
+typedef Leaf* LeafPtr;
 
 class BaseScene : public BaseController {
 private:
