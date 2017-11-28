@@ -6,6 +6,9 @@
 #include <controller/network/OscController.h>
 #include "util/PlatformConstants.h"
 
+// global
+#define LEAF_COUNT 25
+
 // serial
 #define BAUD_RATE 115200
 
@@ -34,8 +37,16 @@ BaseControllerPtr controllers[] = {
         &osc
 };
 
+LeafPtr leafs[LEAF_COUNT];
+
 void setup() {
     Serial.begin(BAUD_RATE);
+
+    // setup leafs
+    for(uint8_t i = 0; i < LEAF_COUNT; i++)
+    {
+        leafs[i] = new Leaf(i);
+    }
 
     // setup controllers
     for (auto &controller : controllers) {

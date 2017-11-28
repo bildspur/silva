@@ -6,20 +6,24 @@
 #define SILVA_EASINGFLOAT_H
 
 
-class EasingFloat {
+class EasingValue {
 private:
     float value;
     float target;
     float easing;
 
 public:
-    explicit EasingFloat(float value = 0.0, float easing = 0.1);
+    explicit EasingValue(float value = 0.0, float easing = 0.1);
 
     void update();
 
     float get();
 
-     void set(float value);
+    int getInt();
+
+    void set(float value);
+
+    void setTarget(float value);
 
     float setEasing(float easing);
 };

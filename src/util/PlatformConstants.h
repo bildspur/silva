@@ -5,8 +5,11 @@
 #ifndef SILVA_PLATFORMCONSTANTS_H
 #define SILVA_PLATFORMCONSTANTS_H
 
+#include <model/Leaf.h>
+
 // typedefs
 typedef BaseController* BaseControllerPtr;
+typedef Leaf* LeafPtr;
 
 // NodeMCU Digital Pins
 #define D0  16
