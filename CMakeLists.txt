@@ -51,4 +51,4 @@ add_custom_target(
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_executable(${PROJECT_NAME} ${SRC_LIST} src/util/EasingValue.cpp src/util/EasingValue.h src/controller/renderer/MCPRenderer.cpp src/controller/renderer/MCPRenderer.h)
+add_executable(${PROJECT_NAME} ${SRC_LIST} src/util/EasingValue.cpp src/util/EasingValue.h src/controller/renderer/MCPRenderer.cpp src/controller/renderer/MCPRenderer.h src/controller/scene/InteractionScene.cpp src/controller/scene/InteractionScene.h src/controller/scene/BaseScene.cpp src/controller/scene/BaseScene.h)

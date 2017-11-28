@@ -5,7 +5,7 @@
 #include <controller/network/OTAController.h>
 #include <controller/network/OscController.h>
 #include <controller/renderer/MCPRenderer.h>
-#include "util/PlatformConstants.h"
+#include <controller/scene/InteractionScene.h>
 
 // global
 #define LEAF_COUNT 25
@@ -35,11 +35,18 @@ auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
 auto mcp = MCPRenderer(MCP_COUNT, leafs);
 
+// scenes
+auto interactionScene = InteractionScene(leafs);
+
+BaseScene activeScene = interactionScene;
+
+// controller list
 BaseControllerPtr controllers[] = {
         &network,
         &ota,
         &osc,
         &mcp,
+        &activeScene
 };
 
 void setup() {
