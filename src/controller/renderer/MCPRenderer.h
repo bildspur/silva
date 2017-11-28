@@ -26,6 +26,8 @@ public:
     void setup() override;
 
     void loop() override;
+
+    void render(LeafPtr leaf);
 };
 
 

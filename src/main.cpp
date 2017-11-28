@@ -4,10 +4,12 @@
 #include <controller/network/NetworkController.h>
 #include <controller/network/OTAController.h>
 #include <controller/network/OscController.h>
+#include <controller/renderer/MCPRenderer.h>
 #include "util/PlatformConstants.h"
 
 // global
 #define LEAF_COUNT 25
+#define MCP_COUNT 2
 
 // serial
 #define BAUD_RATE 115200
@@ -25,19 +27,20 @@
 #define OSC_IN_PORT 8000
 
 // variables
+LeafPtr leafs[LEAF_COUNT];
 
 // controllers
 auto network = NetworkController(DEVICE_NAME, SSID_NAME, SSID_PASSWORD);
 auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
+auto mcp = MCPRenderer(MCP_COUNT, leafs);
 
 BaseControllerPtr controllers[] = {
         &network,
         &ota,
-        &osc
+        &osc,
+        &mcp,
 };
-
-LeafPtr leafs[LEAF_COUNT];
 
 void setup() {
     Serial.begin(BAUD_RATE);

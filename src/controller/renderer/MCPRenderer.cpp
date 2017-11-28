@@ -37,11 +37,15 @@ void MCPRenderer::loop() {
     for(auto i = 0; i < sizeof(leafs) + 1; i++)
     {
         auto leaf = leafs[i];
-        auto mcpIndex = static_cast<uint8_t>(leaf->getId() / MCP_PIN_COUNT);
-        auto leafPin = static_cast<uint8_t>(leaf->getId() % MCP_PIN_COUNT);
-
-        // get mcp and send output
-        auto mcp = mcps[mcpIndex];
-        mcp->digitalWrite(leafPin, leaf->getBrightness());
+        render(leaf);
     }
+}
+
+void MCPRenderer::render(LeafPtr leaf) {
+    auto mcpIndex = static_cast<uint8_t>(leaf->getId() / MCP_PIN_COUNT);
+    auto leafPin = static_cast<uint8_t>(leaf->getId() % MCP_PIN_COUNT);
+
+    // get mcp and send output
+    auto mcp = mcps[mcpIndex];
+    mcp->digitalWrite(leafPin, leaf->getBrightness());
 }
