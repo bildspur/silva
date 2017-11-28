@@ -29,6 +29,11 @@
 #define OSC_OUT_PORT 9000
 #define OSC_IN_PORT 8000
 
+// typedefs
+typedef BaseController* BaseControllerPtr;
+typedef Leaf* LeafPtr;
+typedef BaseScene* ScenePtr;
+
 // variables
 LeafPtr leafs[LEAF_COUNT];
 
@@ -42,7 +47,7 @@ auto lightSensor = LightSensor(LIGHT_SENSOR_UPDATE_FREQ);
 // scenes
 auto interactionScene = InteractionScene(&lightSensor, leafs);
 
-BaseScene* activeScene = &interactionScene;
+ScenePtr activeScene = &interactionScene;
 
 // controller list
 BaseControllerPtr controllers[] = {

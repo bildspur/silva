@@ -8,8 +8,11 @@
 #include <controller/BaseController.h>
 #include <util/PlatformConstants.h>
 #include <Adafruit_MCP23017.h>
+#include <model/Leaf.h>
 
 #define MCP_PIN_COUNT 16
+
+typedef Leaf* LeafPtr;
 
 class MCPRenderer : public BaseController {
 private:

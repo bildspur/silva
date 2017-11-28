@@ -5,13 +5,6 @@
 #ifndef SILVA_PLATFORMCONSTANTS_H
 #define SILVA_PLATFORMCONSTANTS_H
 
-#include <model/Leaf.h>
-#include <controller/scene/BaseScene.h>
-
-// typedefs
-typedef BaseController* BaseControllerPtr;
-typedef Leaf* LeafPtr;
-
 // NodeMCU Digital Pins
 #define D0  16
 #define D1  5  // I2C Bus SCL (clock)
