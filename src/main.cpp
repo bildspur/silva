@@ -42,6 +42,11 @@ void setup() {
         controller->setup();
     }
 
+    // setup handlers
+    osc.onMessageReceived([](OSCMessage &msg) {
+        Serial.println("osc message received!");
+    });
+
     // add osc mdns
     MDNS.addService("osc", "udp", OSC_IN_PORT);
 }

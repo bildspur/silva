@@ -12,14 +12,23 @@
 #include <OSCMessage.h>
 #include <WiFiUdp.h>
 
+// exclude min and max
+#undef max
+#undef min
+#include <functional>
+
 class OscController : public BaseController {
 private:
+    typedef std::function<void(OSCMessage &msg)> OSCHandlerFunction;
+
     const IPAddress broadcastIP = IPAddress(255, 255, 255, 255);
 
     uint16_t inPort;
     uint16_t outPort;
 
     WiFiUDP Udp;
+
+    OSCHandlerFunction onMessageReceivedCallback;
 
     void routeOSCMessage(OSCMessage &msg);
 
@@ -30,6 +39,8 @@ public:
     void loop() override;
 
     void sendMessage(OSCMessage &msg);
+
+    void onMessageReceived(OSCHandlerFunction handler);
 };
 
 

@@ -42,5 +42,10 @@ void OscController::sendMessage(OSCMessage &msg) {
 }
 
 void OscController::routeOSCMessage(OSCMessage &msg) {
-    // todo: use observer pattern for message routing
+    if(onMessageReceivedCallback)
+        onMessageReceivedCallback(msg);
+}
+
+void OscController::onMessageReceived(OscController::OSCHandlerFunction handler) {
+    onMessageReceivedCallback = handler;
 }
