@@ -52,6 +52,9 @@ BaseControllerPtr controllers[] = {
 void setup() {
     Serial.begin(BAUD_RATE);
 
+    // setup wire
+    Wire.begin();
+
     // setup leafs
     for(uint8_t i = 0; i < LEAF_COUNT; i++)
     {
