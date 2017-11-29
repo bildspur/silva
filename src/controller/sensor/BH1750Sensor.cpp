@@ -11,7 +11,7 @@ BH1750Sensor::BH1750Sensor(unsigned int updateFrequency) : LightSensor(updateFre
 void BH1750Sensor::setup() {
     LightSensor::setup();
 
-    lightMeter->begin(BH1750_CONTINUOUS_LOW_RES_MODE);
+    lightMeter->begin(BH1750_CONTINUOUS_HIGH_RES_MODE);
 }
 
 void BH1750Sensor::loop() {
