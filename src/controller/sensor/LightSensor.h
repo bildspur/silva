@@ -26,6 +26,8 @@ public:
     void loop() override;
 
     uint16_t getLuminosity();
+
+    uint8_t normalize(uint16_t value);
 };
 
 

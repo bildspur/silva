@@ -24,6 +24,14 @@ void TreeScene::setup() {
 void TreeScene::loop() {
     BaseScene::loop();
 
-    // todo: use light sensor to change life value (0-255)
+    // use light sensor to change life value (0-255)
+    auto luminosity = lightSensor->getLuminosity();
+    auto delta = lightSensor->normalize(lastLuminosity - luminosity);
+
+    // add delta to life
+
+
     // todo: use life value together with distance to turn on and off leafs
+
+    lastLuminosity = luminosity;
 }

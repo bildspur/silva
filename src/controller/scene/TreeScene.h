@@ -15,6 +15,8 @@ private:
 
     uint8_t life;
 
+    uint16_t lastLuminosity;
+
 public:
     explicit TreeScene(LightSensor *lightSensor, LeafPtr *leafs);
 

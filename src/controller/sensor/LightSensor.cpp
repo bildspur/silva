@@ -37,3 +37,7 @@ void LightSensor::loop() {
 uint16_t LightSensor::getLuminosity() {
     return luminostiy;
 }
+
+uint8_t LightSensor::normalize(uint16_t value) {
+    return static_cast<uint8_t>(map(value, 0, 65535, 0, 255));
+}

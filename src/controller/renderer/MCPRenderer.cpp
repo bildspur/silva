@@ -5,7 +5,7 @@
 #include <Arduino.h>
 #include "MCPRenderer.h"
 
-MCPRenderer::MCPRenderer(uint8_t mcpCount, LeafPtr *leafs, uint8_t minBrightness = 0, uint8_t maxBrightness = 255) {
+MCPRenderer::MCPRenderer(uint8_t mcpCount, LeafPtr *leafs, uint8_t minBrightness, uint8_t maxBrightness) {
     this->mcpCount = mcpCount;
     this->leafs = leafs;
     this->minBrightness = minBrightness;
