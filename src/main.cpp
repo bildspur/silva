@@ -6,13 +6,16 @@
 #include <controller/network/OTAController.h>
 #include <controller/network/OscController.h>
 #include <controller/renderer/MCPRenderer.h>
-#include <controller/scene/InteractionScene.h>
+#include <controller/scene/TreeScene.h>
 
 // global
 #define LEAF_COUNT 25
 #define MCP_COUNT 2
 
 #define LIGHT_SENSOR_UPDATE_FREQ 250
+
+#define MIN_BRIGHTNESS 0
+#define MAX_BRIGHTNESS 255
 
 // serial
 #define BAUD_RATE 115200
@@ -45,7 +48,7 @@ auto mcp = MCPRenderer(MCP_COUNT, leafs);
 auto lightSensor = LightSensor(LIGHT_SENSOR_UPDATE_FREQ);
 
 // scenes
-auto interactionScene = InteractionScene(&lightSensor, leafs);
+auto interactionScene = TreeScene(&lightSensor, leafs);
 
 ScenePtr activeScene = &interactionScene;
 

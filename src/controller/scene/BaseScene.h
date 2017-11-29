@@ -13,6 +13,8 @@ typedef Leaf* LeafPtr;
 
 class BaseScene : public BaseController {
 private:
+
+protected:
     LeafPtr *leafs;
 
 public:

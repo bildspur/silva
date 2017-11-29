@@ -12,9 +12,6 @@
 #define MIN_DISTANCE 0
 #define MAX_DISTANCE 255
 
-#define MIN_BRIGHTNESS 0
-#define MAX_BRIGHTNESS 255
-
 class Leaf {
 private:
     uint8_t id;

@@ -9,12 +9,14 @@
 #include <controller/sensor/LightSensor.h>
 #include "BaseScene.h"
 
-class InteractionScene : public BaseScene {
+class TreeScene : public BaseScene {
 private:
     LightSensor *lightSensor;
 
+    uint8_t life;
+
 public:
-    explicit InteractionScene(LightSensor *lightSensor, LeafPtr *leafs);
+    explicit TreeScene(LightSensor *lightSensor, LeafPtr *leafs);
 
     void setup() override;
 
