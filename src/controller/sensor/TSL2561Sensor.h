@@ -11,11 +11,7 @@
 
 class TSL2561Sensor : public LightSensor {
 private:
-    TSL2561 *tsl = new TSL2561(TSL2561_ADDR_FLOAT);
-
-    uint16_t luminostiy = 0;
-
-    Timer *timer;
+    TSL2561 *lightMeter = new TSL2561(TSL2561_ADDR_FLOAT);
 
 public:
     explicit TSL2561Sensor(unsigned int updateFrequency = 250);

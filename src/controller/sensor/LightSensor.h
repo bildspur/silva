@@ -12,6 +12,8 @@
 
 class LightSensor : public BaseController {
 private:
+
+protected:
     uint16_t luminostiy = 0;
 
     Timer *timer;
