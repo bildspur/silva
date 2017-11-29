@@ -2,6 +2,7 @@
 // Created by Florian on 28.11.17.
 //
 
+#include <controller/sensor/LightSensor.h>
 #include "TreeScene.h"
 
 TreeScene::TreeScene(LightSensor *lightSensor, LeafPtr *leafs) : BaseScene(leafs) {

@@ -6,9 +6,10 @@
 #define SILVA_NETWORKCONTROLLER_H
 
 #include <ESP8266WiFi.h>
+#include <ESP8266mDNS.h>
+
 #include <WiFiClient.h>
 #include <WiFiUdp.h>
-#include <ESP8266mDNS.h>
 #include <IPAddress.h>
 
 #include <controller/BaseController.h>

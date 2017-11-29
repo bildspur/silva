@@ -7,6 +7,8 @@
 #include <controller/network/OscController.h>
 #include <controller/renderer/MCPRenderer.h>
 #include <controller/scene/TreeScene.h>
+#include <controller/sensor/LightSensor.h>
+#include <controller/sensor/TSL2561Sensor.h>
 
 // global
 #define LEAF_COUNT 25
@@ -44,11 +46,11 @@ LeafPtr leafs[LEAF_COUNT];
 auto network = NetworkController(DEVICE_NAME, SSID_NAME, SSID_PASSWORD);
 auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
-auto mcp = MCPRenderer(MCP_COUNT, leafs);
-auto lightSensor = LightSensor(LIGHT_SENSOR_UPDATE_FREQ);
+auto mcp = MCPRenderer(MCP_COUNT, leafs, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
+LightSensor *lightSensor = new TSL2561Sensor(LIGHT_SENSOR_UPDATE_FREQ);
 
 // scenes
-auto interactionScene = TreeScene(&lightSensor, leafs);
+auto interactionScene = TreeScene(lightSensor, leafs);
 
 ScenePtr activeScene = &interactionScene;
 
@@ -58,7 +60,7 @@ BaseControllerPtr controllers[] = {
         &ota,
         &osc,
         &mcp,
-        &lightSensor,
+        lightSensor,
         activeScene
 };
 
@@ -86,6 +88,8 @@ void setup() {
 
     // add osc mdns
     MDNS.addService("osc", "udp", OSC_IN_PORT);
+
+    Serial.println("setup finished!");
 }
 
 void loop() {
