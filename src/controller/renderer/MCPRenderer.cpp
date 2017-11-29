@@ -5,9 +5,12 @@
 #include <Arduino.h>
 #include "MCPRenderer.h"
 
-MCPRenderer::MCPRenderer(uint8_t mcpCount, LeafPtr *leafs) {
+MCPRenderer::MCPRenderer(uint8_t mcpCount, LeafPtr *leafs, uint8_t minBrightness = 0, uint8_t maxBrightness = 255) {
     this->mcpCount = mcpCount;
     this->leafs = leafs;
+    this->minBrightness = minBrightness;
+    this->maxBrightness = maxBrightness;
+
     this->mcps = new MCP23017Ptr[mcpCount];
 }
 
@@ -47,5 +50,6 @@ void MCPRenderer::render(LeafPtr leaf) {
 
     // get mcp and send output
     auto mcp = mcps[mcpIndex];
-    mcp->digitalWrite(leafPin, leaf->getBrightness());
+    auto value = static_cast<uint8_t>(map(leaf->getBrightness(), 0, 255, minBrightness, maxBrightness));
+    mcp->digitalWrite(leafPin, value);
 }

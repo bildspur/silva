@@ -23,8 +23,11 @@ private:
     LeafPtr *leafs;
     MCP23017Ptr *mcps;
 
+    uint8_t minBrightness;
+    uint8_t maxBrightness;
+
 public:
-    explicit MCPRenderer(uint8_t mcpCount, LeafPtr *leafs);
+    explicit MCPRenderer(uint8_t mcpCount, LeafPtr *leafs, uint8_t minBrightness = 0, uint8_t maxBrightness = 255);
 
     void setup() override;
 
