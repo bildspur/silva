@@ -2,6 +2,7 @@
 // Created by Florian on 27.11.17.
 //
 
+#include <HardwareSerial.h>
 #include "Leaf.h"
 
 Leaf::Leaf(uint8_t id, uint8_t distance) {

@@ -10,7 +10,7 @@
 #include <controller/sensor/BH1750Sensor.h>
 
 // global
-#define LEAF_COUNT 3
+#define LEAF_COUNT 8
 #define MCP_COUNT 1
 
 #define LIGHT_SENSOR_UPDATE_FREQ 250

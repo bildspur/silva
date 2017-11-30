@@ -7,12 +7,12 @@
 
 EasingValue::EasingValue(float value, float easing) {
     set(value);
-    set(easing);
+    setEasing(easing);
 }
 
 void EasingValue::update() {
     auto delta = target - value;
-    value = delta * easing;
+    value += delta * easing;
 }
 
 float EasingValue::get() {
@@ -24,7 +24,7 @@ void EasingValue::set(float value) {
     this->target = value;
 }
 
-float EasingValue::setEasing(float easing) {
+void EasingValue::setEasing(float easing) {
     this->easing = easing;
 }
 
@@ -34,4 +34,12 @@ int EasingValue::getInt() {
 
 void EasingValue::setTarget(float value) {
     this->target = value;
+}
+
+float EasingValue::getTarget() {
+    return this->target;
+}
+
+float EasingValue::getEasing() {
+    return this->easing;
 }

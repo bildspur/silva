@@ -11,6 +11,7 @@
 #include <model/Tree.h>
 
 #define MCP_PIN_COUNT 16
+#define MCP_ADDR_FLOAT 0x20
 
 class MCPRenderer : public BaseController {
 private:

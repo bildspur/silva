@@ -25,7 +25,11 @@ public:
 
     void setTarget(float value);
 
-    float setEasing(float easing);
+    float getTarget();
+
+    void setEasing(float easing);
+
+    float getEasing();
 };
 
 

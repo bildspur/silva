@@ -12,13 +12,15 @@
 #define MIN_DISTANCE 0
 #define MAX_DISTANCE 255
 
+#define EASING_SPEED 0.05
+
 class Leaf {
 private:
     uint8_t id;
 
     uint8_t distance;
 
-    EasingValue brightness = EasingValue(0.0, 0.1);
+    EasingValue brightness = EasingValue(0.0, EASING_SPEED);
 
 public:
     explicit Leaf(uint8_t id, uint8_t distance = 0);

@@ -21,7 +21,7 @@ void MCPRenderer::setup() {
     for(uint8_t i = 0; i < mcpCount; i++)
     {
         auto mcp = new Adafruit_MCP23017();
-        mcp->begin(i);
+        mcp->begin(static_cast<uint8_t>(MCP_ADDR_FLOAT + i));
 
         // init port mode for led control
         for(uint8_t j = 0; j < MCP_PIN_COUNT; j++)
@@ -63,6 +63,6 @@ void MCPRenderer::render(LeafPtr leaf) {
     Serial.print(",");
     Serial.print(leafPin);
     Serial.print("] ");
-    Serial.print(value);
-    Serial.print(")\t");
+    Serial.print(leaf->getBrightness());
+    Serial.print(") | ");
 }
