@@ -10,8 +10,8 @@
 #include <controller/sensor/BH1750Sensor.h>
 
 // global
-#define LEAF_COUNT 25
-#define MCP_COUNT 2
+#define LEAF_COUNT 3
+#define MCP_COUNT 1
 
 #define LIGHT_SENSOR_UPDATE_FREQ 250
 
@@ -40,16 +40,19 @@ typedef BaseScene* ScenePtr;
 
 // variables
 LeafPtr leafs[LEAF_COUNT];
+auto tree = Tree(LEAF_COUNT, leafs);
 
 // controllers
 auto network = NetworkController(DEVICE_NAME, SSID_NAME, SSID_PASSWORD);
 auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
-auto mcp = MCPRenderer(MCP_COUNT, leafs, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
+auto mcp = MCPRenderer(MCP_COUNT, &tree, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
+
+// sensor
 LightSensor *lightSensor = new BH1750Sensor(LIGHT_SENSOR_UPDATE_FREQ);
 
 // scenes
-auto interactionScene = TreeScene(lightSensor, leafs);
+auto interactionScene = TreeScene(lightSensor, &tree);
 
 ScenePtr activeScene = &interactionScene;
 

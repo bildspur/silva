@@ -5,9 +5,9 @@
 #include <Arduino.h>
 #include "MCPRenderer.h"
 
-MCPRenderer::MCPRenderer(uint8_t mcpCount, LeafPtr *leafs, uint8_t minBrightness, uint8_t maxBrightness) {
+MCPRenderer::MCPRenderer(uint8_t mcpCount, Tree *tree, uint8_t minBrightness, uint8_t maxBrightness) {
     this->mcpCount = mcpCount;
-    this->leafs = leafs;
+    this->tree = tree;
     this->minBrightness = minBrightness;
     this->maxBrightness = maxBrightness;
 
@@ -37,11 +37,15 @@ void MCPRenderer::setup() {
 void MCPRenderer::loop() {
     BaseController::loop();
 
-    for(auto i = 0; i < sizeof(leafs) + 1; i++)
+    Serial.print("rendering ");
+    Serial.print(tree->getSize());
+    Serial.print(" ");
+    for(auto i = 0; i < tree->getSize(); i++)
     {
-        auto leaf = leafs[i];
+        auto leaf = tree->getLeaf(i);
         render(leaf);
     }
+    Serial.println();
 }
 
 void MCPRenderer::render(LeafPtr leaf) {
@@ -52,4 +56,13 @@ void MCPRenderer::render(LeafPtr leaf) {
     auto mcp = mcps[mcpIndex];
     auto value = static_cast<uint8_t>(map(leaf->getBrightness(), 0, 255, minBrightness, maxBrightness));
     mcp->digitalWrite(leafPin, value);
+
+    Serial.print(leaf->getId());
+    Serial.print(" ([");
+    Serial.print(mcpIndex);
+    Serial.print(",");
+    Serial.print(leafPin);
+    Serial.print("] ");
+    Serial.print(value);
+    Serial.print(")\t");
 }

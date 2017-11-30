@@ -8,17 +8,16 @@
 
 #include <controller/BaseController.h>
 #include <model/Leaf.h>
-
-typedef Leaf* LeafPtr;
+#include <model/Tree.h>
 
 class BaseScene : public BaseController {
 private:
 
 protected:
-    LeafPtr *leafs;
+    Tree *tree;
 
 public:
-    explicit BaseScene(LeafPtr *leafs);
+    explicit BaseScene(Tree *tree);
 
     void setup() override;
 

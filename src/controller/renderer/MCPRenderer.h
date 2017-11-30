@@ -8,11 +8,9 @@
 #include <controller/BaseController.h>
 #include <util/PlatformConstants.h>
 #include <Adafruit_MCP23017.h>
-#include <model/Leaf.h>
+#include <model/Tree.h>
 
 #define MCP_PIN_COUNT 16
-
-typedef Leaf* LeafPtr;
 
 class MCPRenderer : public BaseController {
 private:
@@ -20,14 +18,14 @@ private:
 
     uint8_t mcpCount;
 
-    LeafPtr *leafs;
+    Tree *tree;
     MCP23017Ptr *mcps;
 
     uint8_t minBrightness;
     uint8_t maxBrightness;
 
 public:
-    explicit MCPRenderer(uint8_t mcpCount, LeafPtr *leafs, uint8_t minBrightness = 0, uint8_t maxBrightness = 255);
+    explicit MCPRenderer(uint8_t mcpCount, Tree *tree, uint8_t minBrightness = 0, uint8_t maxBrightness = 255);
 
     void setup() override;
 

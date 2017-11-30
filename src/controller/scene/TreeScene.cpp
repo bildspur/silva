@@ -5,16 +5,16 @@
 #include <controller/sensor/LightSensor.h>
 #include "TreeScene.h"
 
-TreeScene::TreeScene(LightSensor *lightSensor, LeafPtr *leafs) : BaseScene(leafs) {
+TreeScene::TreeScene(LightSensor *lightSensor, Tree *tree) : BaseScene(tree) {
     this->lightSensor = lightSensor;
 }
 
 void TreeScene::setup() {
     BaseScene::setup();
 
-    for(auto i = 0; i < sizeof(leafs); i++)
+    for(auto i = 0; i < tree->getSize(); i++)
     {
-        auto leaf = leafs[i];
+        auto leaf = tree->getLeaf(i);
 
         // turn off light and dim in (smooth intro)
         leaf->setBrightness(0, false);

@@ -4,8 +4,8 @@
 
 #include "BaseScene.h"
 
-BaseScene::BaseScene(LeafPtr *leafs) {
-    this->leafs = leafs;
+BaseScene::BaseScene(Tree *tree) {
+    this->tree = tree;
 }
 
 void BaseScene::setup() {
@@ -16,8 +16,8 @@ void BaseScene::loop() {
     BaseController::loop();
 
     // update leafs
-    for(auto i = 0; i < sizeof(leafs) + 1; i++)
+    for(auto i = 0; i < tree->getSize(); i++)
     {
-        leafs[i]->update();
+        tree->getLeaf(i)->update();
     }
 }

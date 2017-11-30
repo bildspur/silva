@@ -18,7 +18,7 @@ private:
     uint16_t lastLuminosity;
 
 public:
-    explicit TreeScene(LightSensor *lightSensor, LeafPtr *leafs);
+    explicit TreeScene(LightSensor *lightSensor, Tree *tree);
 
     void setup() override;
 
