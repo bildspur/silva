@@ -12,7 +12,7 @@
 #define MIN_DISTANCE 0
 #define MAX_DISTANCE 255
 
-#define EASING_SPEED 0.05
+#define EASING_SPEED 0.01
 
 class Leaf {
 private:
