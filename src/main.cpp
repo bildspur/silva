@@ -8,6 +8,7 @@
 #include <controller/renderer/MCPRenderer.h>
 #include <controller/scene/TreeScene.h>
 #include <controller/sensor/BH1750Sensor.h>
+#include <util/OscDebugger.h>
 
 // global
 #define LEAF_COUNT 8
@@ -71,6 +72,9 @@ void setup() {
 
     // setup wire
     Wire.begin(D2, D1);
+
+    // setup osc debugger
+    OscDebugger::osc = &osc;
 
     // setup leafs
     for(uint8_t i = 0; i < LEAF_COUNT; i++)
