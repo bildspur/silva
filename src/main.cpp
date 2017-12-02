@@ -35,7 +35,7 @@
 #define OSC_OUT_PORT 9000
 #define OSC_IN_PORT 8000
 
-#define HEARTBEAT_TIME 3000
+#define HEARTBEAT_TIME 5000
 
 #define FLOAT_COMPARE 0.5
 
@@ -79,13 +79,15 @@ void handleOsc(OSCMessage &msg)
 {
     msg.dispatch("/silva/isEdit", [](OSCMessage &msg){
         isEditMode = (msg.getFloat(0) > FLOAT_COMPARE);
+        Serial.println("edit mode changed!");
     });
 }
 
 void sendHeartbeat()
 {
+    Serial.println("send heartbeat!");
     OSCMessage msg("/silva/isEdit");
-    msg.add(msg.getFloat(0) > FLOAT_COMPARE);
+    msg.add(isEditMode ? 1.0f : 0.0f);
     osc.sendMessage(msg);
 }
 
@@ -110,11 +112,7 @@ void setup() {
     }
 
     // setup handlers
-    osc.onMessageReceived([](OSCMessage &msg) {
-        Serial.println("osc message received!");
-        handleOsc(msg);
-    });
-
+    osc.onMessageReceived(handleOsc);
     heartbeat.onHeartbeat(sendHeartbeat);
 
     // add osc mdns
