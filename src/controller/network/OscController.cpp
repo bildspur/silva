@@ -49,3 +49,21 @@ void OscController::routeOSCMessage(OSCMessage &msg) {
 void OscController::onMessageReceived(OscController::OSCHandlerFunction handler) {
     onMessageReceivedCallback = handler;
 }
+
+void OscController::send(const char *route, const char *value) {
+    OSCMessage msg(route);
+    msg.add(value);
+    sendMessage(msg);
+}
+
+void OscController::send(const char *route, int value) {
+    OSCMessage msg(route);
+    msg.add(value);
+    sendMessage(msg);
+}
+
+void OscController::send(const char *route, float value) {
+    OSCMessage msg(route);
+    msg.add(value);
+    sendMessage(msg);
+}

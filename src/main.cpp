@@ -10,6 +10,7 @@
 #include <controller/sensor/BH1750Sensor.h>
 #include <util/OscDebugger.h>
 #include <controller/network/Heartbeat.h>
+#include <controller/scene/EditScene.h>
 
 // global
 #define LEAF_COUNT 8
@@ -36,6 +37,7 @@
 #define OSC_IN_PORT 8000
 
 #define HEARTBEAT_TIME 5000
+#define EDIT_UI_TIME 1000
 
 #define FLOAT_COMPARE 0.5
 
@@ -61,6 +63,7 @@ LightSensor *lightSensor = new BH1750Sensor(LIGHT_SENSOR_UPDATE_FREQ);
 // scenes
 auto isEditMode = false;
 auto interactionScene = TreeScene(lightSensor, &tree);
+auto editScene = EditScene(&tree, &osc, EDIT_UI_TIME);
 
 ScenePtr activeScene = &interactionScene;
 
@@ -79,8 +82,25 @@ void handleOsc(OSCMessage &msg)
 {
     msg.dispatch("/silva/isEdit", [](OSCMessage &msg){
         isEditMode = (msg.getFloat(0) > FLOAT_COMPARE);
-        Serial.println("edit mode changed!");
+
+        if(isEditMode)
+            activeScene = &editScene;
+        else
+            activeScene = &interactionScene;
+
+        // setup scene
+        activeScene->setup();
     });
+
+    if(isEditMode) {
+        msg.dispatch("/silva/next", [](OSCMessage &msg) {
+            editScene.nextLeaf();
+        });
+
+        msg.dispatch("/silva/last", [](OSCMessage &msg) {
+            editScene.lastLeaf();
+        });
+    }
 }
 
 void sendHeartbeat()

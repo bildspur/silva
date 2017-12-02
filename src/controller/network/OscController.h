@@ -15,6 +15,7 @@
 // exclude min and max
 #undef max
 #undef min
+
 #include <functional>
 
 class OscController : public BaseController {
@@ -36,11 +37,18 @@ public:
     OscController(uint16_t inPort, uint16_t outPort);
 
     void setup() override;
+
     void loop() override;
 
     void sendMessage(OSCMessage &msg);
 
     void onMessageReceived(OSCHandlerFunction handler);
+
+    void send(const char *route, const char *value);
+
+    void send(const char *route, int value);
+
+    void send(const char *route, float value);
 };
 
 

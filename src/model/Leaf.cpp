@@ -28,3 +28,11 @@ uint8_t Leaf::getBrightness() {
 uint8_t Leaf::getId() {
     return id;
 }
+
+void Leaf::setDistance(uint8_t value) {
+    distance = value;
+}
+
+uint8_t Leaf::getDistance() {
+    return distance;
+}

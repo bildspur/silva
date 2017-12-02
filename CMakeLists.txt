@@ -51,4 +51,4 @@ add_custom_target(
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_executable(${PROJECT_NAME} ${SRC_LIST} src/model/Tree.cpp src/model/Tree.h src/util/OscDebugger.cpp src/util/OscDebugger.h src/controller/network/Heartbeat.cpp src/controller/network/Heartbeat.h)
+add_executable(${PROJECT_NAME} ${SRC_LIST} src/model/Tree.cpp src/model/Tree.h src/util/OscDebugger.cpp src/util/OscDebugger.h src/controller/network/Heartbeat.cpp src/controller/network/Heartbeat.h src/controller/scene/EditScene.cpp src/controller/scene/EditScene.h)
