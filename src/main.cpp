@@ -9,6 +9,7 @@
 #include <controller/scene/TreeScene.h>
 #include <controller/sensor/BH1750Sensor.h>
 #include <util/OscDebugger.h>
+#include <controller/network/Heartbeat.h>
 
 // global
 #define LEAF_COUNT 8
@@ -34,6 +35,10 @@
 #define OSC_OUT_PORT 9000
 #define OSC_IN_PORT 8000
 
+#define HEARTBEAT_TIME 3000
+
+#define FLOAT_COMPARE 0.5
+
 // typedefs
 typedef BaseController* BaseControllerPtr;
 typedef Leaf* LeafPtr;
@@ -48,11 +53,13 @@ auto network = NetworkController(DEVICE_NAME, SSID_NAME, SSID_PASSWORD);
 auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
 auto mcp = MCPRenderer(MCP_COUNT, &tree, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
+auto heartbeat = Heartbeat(HEARTBEAT_TIME);
 
 // sensor
 LightSensor *lightSensor = new BH1750Sensor(LIGHT_SENSOR_UPDATE_FREQ);
 
 // scenes
+auto isEditMode = false;
 auto interactionScene = TreeScene(lightSensor, &tree);
 
 ScenePtr activeScene = &interactionScene;
@@ -63,9 +70,24 @@ BaseControllerPtr controllers[] = {
         &ota,
         &osc,
         &mcp,
+        &heartbeat,
         lightSensor,
         activeScene
 };
+
+void handleOsc(OSCMessage &msg)
+{
+    msg.dispatch("/silva/isEdit", [](OSCMessage &msg){
+        isEditMode = (msg.getFloat(0) > FLOAT_COMPARE);
+    });
+}
+
+void sendHeartbeat()
+{
+    OSCMessage msg("/silva/isEdit");
+    msg.add(msg.getFloat(0) > FLOAT_COMPARE);
+    osc.sendMessage(msg);
+}
 
 void setup() {
     Serial.begin(BAUD_RATE);
@@ -90,7 +112,10 @@ void setup() {
     // setup handlers
     osc.onMessageReceived([](OSCMessage &msg) {
         Serial.println("osc message received!");
+        handleOsc(msg);
     });
+
+    heartbeat.onHeartbeat(sendHeartbeat);
 
     // add osc mdns
     MDNS.addService("osc", "udp", OSC_IN_PORT);
