@@ -23,8 +23,6 @@ void BH1750Sensor::measure() {
     LightSensor::measure();
 
     luminostiy = lightMeter->readLightLevel();
-
-    OscDebugger::send("/silva/test", printf("Luminosity: %d", luminostiy));
 }
 
 uint16_t BH1750Sensor::getLuminosity() {
