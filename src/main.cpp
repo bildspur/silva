@@ -38,7 +38,7 @@
 #define OSC_IN_PORT 8000
 
 #define HEARTBEAT_TIME 3000
-#define EDIT_UI_TIME 500
+#define EDIT_UI_TIME 1000
 
 #define FLOAT_COMPARE 0.5
 
@@ -89,6 +89,7 @@ void handleOsc(OSCMessage &msg) {
 
         // setup scene
         sceneController.getActiveScene()->setup();
+        heartbeat.sendHeartbeat();
     });
 
     msg.dispatch("/silva/restart", [](OSCMessage &msg) {
@@ -96,6 +97,7 @@ void handleOsc(OSCMessage &msg) {
         ESP.restart();
     });
 
+    // edit scene osc handlers
     if (isEditMode) {
         msg.dispatch("/silva/next", [](OSCMessage &msg) {
             editScene.nextLeaf();
@@ -103,6 +105,10 @@ void handleOsc(OSCMessage &msg) {
 
         msg.dispatch("/silva/last", [](OSCMessage &msg) {
             editScene.lastLeaf();
+        });
+
+        msg.dispatch("/silva/selected/distance", [](OSCMessage &msg) {
+            editScene.getSelectedLeaf()->setDistance(static_cast<uint8_t>(msg.getFloat(0)));
         });
 
         msg.dispatch("/silva/save", [](OSCMessage &msg) {
@@ -113,9 +119,6 @@ void handleOsc(OSCMessage &msg) {
 }
 
 void sendHeartbeat() {
-    Serial.print("Scene: ");
-    Serial.println(sceneController.getActiveScene()->getName());
-
     OSCMessage msg("/silva/isEdit");
     msg.add(isEditMode ? 1.0f : 0.0f);
     osc.sendMessage(msg);

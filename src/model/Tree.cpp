@@ -3,6 +3,7 @@
 //
 
 #include <EEPROM.h>
+#include <util/OscDebugger.h>
 #include "Tree.h"
 
 Tree::Tree(uint16_t size, LeafPtr *leafs) {

@@ -18,7 +18,7 @@ void EditScene::setup() {
 void EditScene::loop() {
     BaseScene::loop();
 
-    if(timer->elapsed())
+    if (timer->elapsed())
         updateUI();
 }
 
@@ -30,8 +30,7 @@ void EditScene::updateUI() {
 }
 
 void EditScene::selectLeaf(uint16_t index) {
-    for(auto i = 0; i < tree->getSize(); i++)
-    {
+    for (auto i = 0; i < tree->getSize(); i++) {
         auto leaf = tree->getLeaf(i);
 
         // turn off light
@@ -42,12 +41,21 @@ void EditScene::selectLeaf(uint16_t index) {
 }
 
 void EditScene::nextLeaf() {
-    leafIndex = static_cast<uint16_t>((leafIndex + 1) % tree->getSize());
+    auto newIndex = static_cast<uint16_t>((leafIndex + 1) % tree->getSize());
+
+    selectLeaf(newIndex);
 }
 
 void EditScene::lastLeaf() {
-    if(leafIndex == 0)
-        leafIndex = tree->getSize();
+    uint16_t newIndex = 0;
+    if (leafIndex == 0)
+        newIndex = static_cast<uint16_t>(tree->getSize() - 1);
     else
-        leafIndex = static_cast<uint16_t>(leafIndex - 1);
+        newIndex = static_cast<uint16_t>(leafIndex - 1);
+
+    selectLeaf(newIndex);
+}
+
+Leaf *EditScene::getSelectedLeaf() {
+    return tree->getLeaf(leafIndex);
 }

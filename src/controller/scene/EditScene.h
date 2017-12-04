@@ -32,6 +32,8 @@ public:
     void nextLeaf();
 
     void lastLeaf();
+
+    Leaf *getSelectedLeaf();
 };
 
 
