@@ -42,9 +42,9 @@
 #define FLOAT_COMPARE 0.5
 
 // typedefs
-typedef BaseController* BaseControllerPtr;
-typedef Leaf* LeafPtr;
-typedef BaseScene* ScenePtr;
+typedef BaseController *BaseControllerPtr;
+typedef Leaf *LeafPtr;
+typedef BaseScene *ScenePtr;
 
 // variables
 LeafPtr leafs[LEAF_COUNT];
@@ -78,12 +78,11 @@ BaseControllerPtr controllers[] = {
         activeScene
 };
 
-void handleOsc(OSCMessage &msg)
-{
-    msg.dispatch("/silva/isEdit", [](OSCMessage &msg){
+void handleOsc(OSCMessage &msg) {
+    msg.dispatch("/silva/isEdit", [](OSCMessage &msg) {
         isEditMode = (msg.getFloat(0) > FLOAT_COMPARE);
 
-        if(isEditMode)
+        if (isEditMode)
             activeScene = &editScene;
         else
             activeScene = &interactionScene;
@@ -92,7 +91,11 @@ void handleOsc(OSCMessage &msg)
         activeScene->setup();
     });
 
-    if(isEditMode) {
+    msg.dispatch("/silva/restart", [](OSCMessage &msg) {
+        ESP.restart();
+    });
+
+    if (isEditMode) {
         msg.dispatch("/silva/next", [](OSCMessage &msg) {
             editScene.nextLeaf();
         });
@@ -100,12 +103,15 @@ void handleOsc(OSCMessage &msg)
         msg.dispatch("/silva/last", [](OSCMessage &msg) {
             editScene.lastLeaf();
         });
+
+        msg.dispatch("/silva/save", [](OSCMessage &msg) {
+            tree.saveLeafs();
+            osc.send("/silva/status", "saved!");
+        });
     }
 }
 
-void sendHeartbeat()
-{
-    Serial.println("send heartbeat!");
+void sendHeartbeat() {
     OSCMessage msg("/silva/isEdit");
     msg.add(isEditMode ? 1.0f : 0.0f);
     osc.sendMessage(msg);
@@ -121,10 +127,7 @@ void setup() {
     OscDebugger::osc = &osc;
 
     // setup leafs
-    for(uint8_t i = 0; i < LEAF_COUNT; i++)
-    {
-        leafs[i] = new Leaf(i);
-    }
+    tree.loadLeafs();
 
     // setup controllers
     for (auto &controller : controllers) {
@@ -139,6 +142,7 @@ void setup() {
     MDNS.addService("osc", "udp", OSC_IN_PORT);
 
     Serial.println("setup finished!");
+    osc.send("/silva/status", "setup finished!");
 }
 
 void loop() {
