@@ -11,6 +11,7 @@
 #include <util/OscDebugger.h>
 #include <controller/network/Heartbeat.h>
 #include <controller/scene/EditScene.h>
+#include <controller/scene/SceneController.h>
 
 // global
 #define LEAF_COUNT 8
@@ -44,7 +45,6 @@
 // typedefs
 typedef BaseController *BaseControllerPtr;
 typedef Leaf *LeafPtr;
-typedef BaseScene *ScenePtr;
 
 // variables
 LeafPtr leafs[LEAF_COUNT];
@@ -62,10 +62,10 @@ LightSensor *lightSensor = new BH1750Sensor(LIGHT_SENSOR_UPDATE_FREQ);
 
 // scenes
 auto isEditMode = false;
-auto interactionScene = TreeScene(lightSensor, &tree);
+auto treeScene = TreeScene(lightSensor, &tree);
 auto editScene = EditScene(&tree, &osc, EDIT_UI_TIME);
 
-ScenePtr activeScene = &interactionScene;
+auto sceneController = SceneController(&treeScene);
 
 // controller list
 BaseControllerPtr controllers[] = {
@@ -75,7 +75,7 @@ BaseControllerPtr controllers[] = {
         &mcp,
         &heartbeat,
         lightSensor,
-        activeScene
+        &sceneController
 };
 
 void handleOsc(OSCMessage &msg) {
@@ -83,12 +83,12 @@ void handleOsc(OSCMessage &msg) {
         isEditMode = (msg.getFloat(0) > FLOAT_COMPARE);
 
         if (isEditMode)
-            activeScene = &editScene;
+            sceneController.setActiveScene(&editScene);
         else
-            activeScene = &interactionScene;
+            sceneController.setActiveScene(&treeScene);
 
         // setup scene
-        activeScene->setup();
+        sceneController.getActiveScene()->setup();
     });
 
     msg.dispatch("/silva/restart", [](OSCMessage &msg) {
@@ -114,7 +114,7 @@ void handleOsc(OSCMessage &msg) {
 
 void sendHeartbeat() {
     Serial.print("Scene: ");
-    Serial.println(activeScene->getName());
+    Serial.println(sceneController.getActiveScene()->getName());
 
     OSCMessage msg("/silva/isEdit");
     msg.add(isEditMode ? 1.0f : 0.0f);
