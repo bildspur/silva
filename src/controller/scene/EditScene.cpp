@@ -4,7 +4,7 @@
 
 #include "EditScene.h"
 
-EditScene::EditScene(Tree *tree, OscController *osc, unsigned long uiInterval) : BaseScene(tree) {
+EditScene::EditScene(Tree *tree, OscController *osc, unsigned long uiInterval) : BaseScene("EditScene", tree) {
     this->timer = new Timer(uiInterval);
     this->osc = osc;
 }

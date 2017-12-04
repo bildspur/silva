@@ -5,7 +5,7 @@
 #include <controller/sensor/LightSensor.h>
 #include "TreeScene.h"
 
-TreeScene::TreeScene(LightSensor *lightSensor, Tree *tree) : BaseScene(tree) {
+TreeScene::TreeScene(LightSensor *lightSensor, Tree *tree) : BaseScene("TreeScene", tree) {
     this->lightSensor = lightSensor;
 }
 

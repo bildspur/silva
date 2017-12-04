@@ -4,7 +4,8 @@
 
 #include "BaseScene.h"
 
-BaseScene::BaseScene(Tree *tree) {
+BaseScene::BaseScene(const char *name, Tree *tree) {
+    this->name = name;
     this->tree = tree;
 }
 
@@ -20,4 +21,8 @@ void BaseScene::loop() {
     {
         tree->getLeaf(i)->update();
     }
+}
+
+const char * BaseScene::getName() const {
+    return name;
 }

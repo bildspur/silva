@@ -16,12 +16,16 @@ private:
 protected:
     Tree *tree;
 
+    const char *name;
+
 public:
-    explicit BaseScene(Tree *tree);
+    explicit BaseScene(const char *name, Tree *tree);
 
     void setup() override;
 
     void loop() override;
+
+    const char * getName() const;
 };
 
 

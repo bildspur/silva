@@ -92,6 +92,7 @@ void handleOsc(OSCMessage &msg) {
     });
 
     msg.dispatch("/silva/restart", [](OSCMessage &msg) {
+        Serial.println("restarting...");
         ESP.restart();
     });
 
@@ -112,6 +113,9 @@ void handleOsc(OSCMessage &msg) {
 }
 
 void sendHeartbeat() {
+    Serial.print("Scene: ");
+    Serial.println(activeScene->getName());
+
     OSCMessage msg("/silva/isEdit");
     msg.add(isEditMode ? 1.0f : 0.0f);
     osc.sendMessage(msg);
