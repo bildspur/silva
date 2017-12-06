@@ -18,6 +18,8 @@ public:
     bool elapsed();
 
     void reset();
+
+    void setWaitTime(unsigned long waitTime);
 };
 
 

@@ -21,3 +21,7 @@ bool Timer::elapsed() {
 void Timer::reset() {
     previousMillis = millis();
 }
+
+void Timer::setWaitTime(unsigned long waitTime) {
+    Timer::waitTime = waitTime;
+}
