@@ -14,17 +14,23 @@
 
 #include <controller/BaseController.h>
 
+#define STA_MAX_DELAYS 50
+
 class NetworkController : public BaseController {
 private:
     const char *deviceName;
     const char *ssid;
     const char *password;
 
+    WiFiMode_t wifiMode;
+
+    void initSTA();
+    void setupSTA();
     void setupAP();
     void setupMDNS();
 
 public:
-    NetworkController(const char *deviceName, const char *ssid, const char *password);
+    NetworkController(const char *deviceName, const char *ssid, const char *password, WiFiMode_t wifiMode = WIFI_AP);
 
     void setup() override;
     void loop() override;

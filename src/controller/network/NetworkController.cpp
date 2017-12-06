@@ -4,10 +4,12 @@
 
 #include "NetworkController.h"
 
-NetworkController::NetworkController(const char *deviceName, const char *ssid, const char *password) {
+NetworkController::NetworkController(const char *deviceName, const char *ssid, const char *password,
+                                     WiFiMode_t wifiMode) {
     this->deviceName = deviceName;
     this->ssid = ssid;
     this->password = password;
+    this->wifiMode = wifiMode;
 }
 
 void NetworkController::setup() {
@@ -15,7 +17,16 @@ void NetworkController::setup() {
 
     WiFi.hostname(deviceName);
 
-    setupAP();
+    if(wifiMode == WIFI_STA)
+    {
+        initSTA();
+        setupSTA();
+    }
+    else
+    {
+        setupAP();
+    }
+
     setupMDNS();
 
     printNetworkInformation();
@@ -23,6 +34,41 @@ void NetworkController::setup() {
 
 void NetworkController::loop() {
     BaseController::loop();
+
+    // check for connection loss
+    if (wifiMode == WIFI_STA && WiFi.status() != WL_CONNECTED)
+    {
+        Serial.println("lost connection...");
+        setup();
+    }
+}
+
+void NetworkController::initSTA() {
+    Serial.println("init STA mode...");
+
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(ssid, password);
+}
+
+void NetworkController::setupSTA() {
+    uint8_t waitedDelays = 0;
+
+    // wait till wifi is connected
+    while (WiFi.status() != WL_CONNECTED) {
+        waitedDelays++;
+
+        // reset wifi
+        if (waitedDelays > STA_MAX_DELAYS) {
+            Serial.println();
+            Serial.println("re-init wifi...");
+            initSTA();
+            waitedDelays = 0;
+        }
+
+        delay(100);
+    }
+
+    Serial.println("connected!");
 }
 
 void NetworkController::setupAP() {
