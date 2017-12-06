@@ -29,8 +29,8 @@
 // network
 #define DEVICE_NAME "silva-master"
 
-#define SSID_NAME "silva"
-#define SSID_PASSWORD "SilvaZauberwald"
+#define SSID_NAME ""
+#define SSID_PASSWORD ""
 
 #define OTA_PASSWORD "bildspur"
 #define OTA_PORT 8266
@@ -41,8 +41,6 @@
 #define HEARTBEAT_TIME 3000
 #define EDIT_UI_TIME 3000
 
-#define FLOAT_COMPARE 0.5
-
 // typedefs
 typedef BaseController *BaseControllerPtr;
 typedef Leaf *LeafPtr;
@@ -52,7 +50,7 @@ LeafPtr leafs[LEAF_COUNT];
 auto tree = Tree(LEAF_COUNT, leafs);
 
 // controllers
-auto network = NetworkController(DEVICE_NAME, SSID_NAME, SSID_PASSWORD);
+auto network = NetworkController(DEVICE_NAME, SSID_NAME, SSID_PASSWORD, WIFI_STA);
 auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
 auto heartbeat = Heartbeat(HEARTBEAT_TIME);
@@ -138,6 +136,9 @@ void sendHeartbeat() {
 
 void setup() {
     Serial.begin(BAUD_RATE);
+
+    // wait 3000 seconds for debugging
+    delay(3000);
 
     // setup wire
     Wire.begin(D2, D1);

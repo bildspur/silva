@@ -28,6 +28,7 @@ private:
     void setupSTA();
     void setupAP();
     void setupMDNS();
+    String getIPAddress();
 
 public:
     NetworkController(const char *deviceName, const char *ssid, const char *password, WiFiMode_t wifiMode = WIFI_AP);

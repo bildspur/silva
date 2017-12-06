@@ -90,8 +90,17 @@ void NetworkController::printNetworkInformation() {
     Serial.println(WiFi.status());
 
     Serial.print("Local IP address: ");
-    Serial.println(WiFi.softAPIP().toString());
+    Serial.println(getIPAddress());
 
     Serial.print("Mac Address: ");
     Serial.println(WiFi.macAddress());
+}
+
+
+String NetworkController::getIPAddress()
+{
+    if (wifiMode == WIFI_AP)
+        return WiFi.softAPIP().toString();
+    else
+        return WiFi.localIP().toString();
 }
