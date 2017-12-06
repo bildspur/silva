@@ -12,6 +12,7 @@
 #include <controller/network/Heartbeat.h>
 #include <controller/scene/EditScene.h>
 #include <controller/scene/SceneController.h>
+#include <controller/renderer/PCA9685Renderer.h>
 
 // global
 #define LEAF_COUNT 8
@@ -54,8 +55,9 @@ auto tree = Tree(LEAF_COUNT, leafs);
 auto network = NetworkController(DEVICE_NAME, SSID_NAME, SSID_PASSWORD);
 auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
-auto mcp = MCPRenderer(MCP_COUNT, &tree, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
 auto heartbeat = Heartbeat(HEARTBEAT_TIME);
+
+LightRenderer *renderer = new PCA9685Renderer(MCP_COUNT, &tree, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
 
 // sensor
 LightSensor *lightSensor = new BH1750Sensor(LIGHT_SENSOR_UPDATE_FREQ);
@@ -72,7 +74,7 @@ BaseControllerPtr controllers[] = {
         &network,
         &ota,
         &osc,
-        &mcp,
+        renderer,
         &heartbeat,
         lightSensor,
         &sceneController
