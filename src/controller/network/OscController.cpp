@@ -51,8 +51,11 @@ void OscController::onMessageReceived(OscController::OSCHandlerFunction handler)
 }
 
 void OscController::send(const char *route, const char *value) {
+    char buffer[CHAR_BUFFER_SIZE];
+    sprintf(buffer, value);
+
     OSCMessage msg(route);
-    msg.add(value);
+    msg.add(buffer);
     sendMessage(msg);
 }
 

@@ -18,6 +18,8 @@
 
 #include <functional>
 
+#define CHAR_BUFFER_SIZE 32
+
 class OscController : public BaseController {
 private:
     typedef std::function<void(OSCMessage &msg)> OSCHandlerFunction;

@@ -11,19 +11,13 @@ void OscDebugger::send(OSCMessage &msg) {
 }
 
 void OscDebugger::send(const char *route, const char *value) {
-    OSCMessage msg(route);
-    msg.add(value);
-    send(msg);
+    osc->send(route, value);
 }
 
 void OscDebugger::send(const char *route, int value) {
-    OSCMessage msg(route);
-    msg.add(value);
-    send(msg);
+    osc->send(route, value);
 }
 
 void OscDebugger::send(const char *route, float value) {
-    OSCMessage msg(route);
-    msg.add(value);
-    send(msg);
+    osc->send(route, value);
 }

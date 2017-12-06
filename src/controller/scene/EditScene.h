@@ -33,6 +33,8 @@ public:
 
     void lastLeaf();
 
+    void markLeaf(uint16_t index);
+
     Leaf *getSelectedLeaf();
 };
 
