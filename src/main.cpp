@@ -7,7 +7,7 @@
 #include <controller/network/OscController.h>
 #include <controller/renderer/MCPRenderer.h>
 #include <controller/scene/TreeScene.h>
-#include <controller/sensor/BH1750Sensor.h>
+#include <controller/sensor/light/BH1750Sensor.h>
 #include <util/OscDebugger.h>
 #include <controller/network/Heartbeat.h>
 #include <controller/scene/EditScene.h>
@@ -29,7 +29,7 @@
 // network
 #define DEVICE_NAME "silva-master"
 
-#define SSID_NAME ""
+#define SSID_NAME "Der Geraet"
 #define SSID_PASSWORD ""
 
 #define OTA_PASSWORD "bildspur"

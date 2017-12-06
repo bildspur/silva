@@ -6,7 +6,7 @@
 #define SILVA_INTERACTIONSCENE_H
 
 
-#include <controller/sensor/LightSensor.h>
+#include <controller/sensor/light/LightSensor.h>
 #include "BaseScene.h"
 
 class TreeScene : public BaseScene {
