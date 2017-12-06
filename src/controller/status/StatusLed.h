@@ -38,6 +38,8 @@ public:
     void turnOn();
 
     void turnOff();
+
+    void write(uint8_t frequency);
 };
 
 

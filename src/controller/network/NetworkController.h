@@ -13,8 +13,10 @@
 #include <IPAddress.h>
 
 #include <controller/BaseController.h>
+#include <controller/status/StatusLed.h>
 
-#define STA_MAX_DELAYS 50
+#define STA_MAX_DELAYS 100
+#define STATUS_LED_PIN D8
 
 class NetworkController : public BaseController {
 private:
@@ -23,6 +25,8 @@ private:
     const char *password;
 
     WiFiMode_t wifiMode;
+
+    StatusLed *statusLed = new StatusLed(STATUS_LED_PIN);
 
     void initSTA();
     void setupSTA();

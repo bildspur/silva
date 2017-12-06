@@ -10,7 +10,7 @@ StatusLed::StatusLed(uint8_t pin) {
 
 void StatusLed::setup() {
     BaseController::setup();
-
+    pinMode(pin, OUTPUT);
     turnOff();
 }
 
@@ -39,11 +39,15 @@ void StatusLed::blink(unsigned long rate) {
 void StatusLed::turnOn() {
     isBlinking = false;
     isLedOn = true;
-    analogWrite(pin, LED_MAX_FREQ);
+    write(LED_MAX_FREQ);
 }
 
 void StatusLed::turnOff() {
     isBlinking = false;
     isLedOn = false;
-    analogWrite(pin, LED_MIN_FREQ);
+    write(LED_MIN_FREQ);
+}
+
+void StatusLed::write(uint8_t frequency) {
+    analogWrite(pin, frequency);
 }

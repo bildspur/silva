@@ -14,6 +14,8 @@ NetworkController::NetworkController(const char *deviceName, const char *ssid, c
 
 void NetworkController::setup() {
     BaseController::setup();
+    statusLed->setup();
+    statusLed->write(20);
 
     WiFi.hostname(deviceName);
 
@@ -30,6 +32,7 @@ void NetworkController::setup() {
     setupMDNS();
 
     printNetworkInformation();
+    statusLed->turnOn();
 }
 
 void NetworkController::loop() {
