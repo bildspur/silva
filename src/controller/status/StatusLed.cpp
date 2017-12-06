@@ -10,6 +10,8 @@ StatusLed::StatusLed(uint8_t pin) {
 
 void StatusLed::setup() {
     BaseController::setup();
+
+    turnOff();
 }
 
 void StatusLed::loop() {

@@ -11,7 +11,7 @@
 #include <util/Timer.h>
 
 #define DEFAULT_LED_RATE 300
-#define LED_MIN_FREQ 20
+#define LED_MIN_FREQ 0
 #define LED_MAX_FREQ 255
 
 class StatusLed : public BaseController {
