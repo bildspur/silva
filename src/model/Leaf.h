@@ -12,6 +12,9 @@
 #define MIN_DISTANCE 0
 #define MAX_DISTANCE 255
 
+#define LEAF_MIN_BRIGHTNESS 0.0f
+#define LEAF_MAX_BRIGHTNESS 1.0f
+
 #define EASING_SPEED 0.01
 
 class Leaf {
@@ -27,9 +30,13 @@ public:
 
     void update();
 
-    void setBrightness(uint8_t value, bool easing = true);
+    void turnOn(bool easing = true);
 
-    uint8_t getBrightness();
+    void turnOff(bool easing = true);
+
+    void setBrightness(float value, bool easing = true);
+
+    float getBrightness();
 
     void setDistance(uint8_t value);
 

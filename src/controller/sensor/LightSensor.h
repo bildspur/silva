@@ -14,13 +14,13 @@ class LightSensor : public BaseController {
 private:
 
 protected:
+    explicit LightSensor(unsigned int updateFrequency = 250);
+
     uint16_t luminostiy = 0;
 
     Timer *timer;
 
 public:
-    explicit LightSensor(unsigned int updateFrequency = 250);
-
     void setup() override;
 
     void loop() override;

@@ -14,15 +14,15 @@ void Leaf::update() {
     brightness.update();
 }
 
-void Leaf::setBrightness(uint8_t value, bool easing) {
+void Leaf::setBrightness(float value, bool easing) {
     if (easing)
         brightness.setTarget(value);
     else
         brightness.set(value);
 }
 
-uint8_t Leaf::getBrightness() {
-    return static_cast<uint8_t>(brightness.getInt());
+float Leaf::getBrightness() {
+    return brightness.get();
 }
 
 uint8_t Leaf::getId() {
@@ -35,4 +35,12 @@ void Leaf::setDistance(uint8_t value) {
 
 uint8_t Leaf::getDistance() {
     return distance;
+}
+
+void Leaf::turnOn(bool easing) {
+    setBrightness(LEAF_MAX_BRIGHTNESS, easing);
+}
+
+void Leaf::turnOff(bool easing) {
+    setBrightness(LEAF_MIN_BRIGHTNESS, easing);
 }

@@ -17,8 +17,8 @@ void TreeScene::setup() {
         auto leaf = tree->getLeaf(i);
 
         // turn off light and dim in (smooth intro)
-        leaf->setBrightness(0, false);
-        leaf->setBrightness(255);
+        leaf->turnOff(false);
+        leaf->turnOn();
     }
 }
 

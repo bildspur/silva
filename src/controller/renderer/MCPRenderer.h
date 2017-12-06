@@ -9,30 +9,26 @@
 #include <util/PlatformConstants.h>
 #include <Adafruit_MCP23017.h>
 #include <model/Tree.h>
+#include "LightRenderer.h"
 
 #define MCP_PIN_COUNT 16
-#define MCP_ADDR_FLOAT 0x20
+#define MCP_MAX_VALUE 255
 
-class MCPRenderer : public BaseController {
+class MCPRenderer : public LightRenderer {
 private:
     typedef Adafruit_MCP23017 *MCP23017Ptr;
 
     uint8_t mcpCount;
-
-    Tree *tree;
     MCP23017Ptr *mcps;
 
-    uint8_t minBrightness;
-    uint8_t maxBrightness;
-
 public:
-    explicit MCPRenderer(uint8_t mcpCount, Tree *tree, uint8_t minBrightness = 0, uint8_t maxBrightness = 255);
+    explicit MCPRenderer(uint8_t mcpCount, Tree *tree, float minBrightness = 0, float maxBrightness = 255);
 
     void setup() override;
 
     void loop() override;
 
-    void render(LeafPtr leaf);
+    void render(LeafPtr leaf) override;
 };
 
 

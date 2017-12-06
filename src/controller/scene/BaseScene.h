@@ -14,13 +14,13 @@ class BaseScene : public BaseController {
 private:
 
 protected:
+    explicit BaseScene(const char *name, Tree *tree);
+
     Tree *tree;
 
     const char *name;
 
 public:
-    explicit BaseScene(const char *name, Tree *tree);
-
     void setup() override;
 
     void loop() override;
