@@ -13,6 +13,7 @@
 #include <controller/scene/EditScene.h>
 #include <controller/scene/SceneController.h>
 #include <controller/renderer/PCA9685Renderer.h>
+#include <controller/sensor/climate/AirConditioner.h>
 
 // global
 #define LEAF_COUNT 8
@@ -41,6 +42,14 @@
 #define HEARTBEAT_TIME 3000
 #define EDIT_UI_TIME 3000
 
+// climate
+#define DHT_PIN D5
+#define HEAT_PAD_PIN D6
+#define FAN_PIN D7
+#define DESIRED_TEMP 20.0
+#define TEMP_OFFSET 1.0f
+#define DHT_UPDATE_TIME 5000
+
 // typedefs
 typedef BaseController *BaseControllerPtr;
 typedef Leaf *LeafPtr;
@@ -54,6 +63,7 @@ auto network = NetworkController(DEVICE_NAME, SSID_NAME, SSID_PASSWORD, WIFI_STA
 auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
 auto heartbeat = Heartbeat(HEARTBEAT_TIME);
+auto airConditioner = AirConditioner(DHT_PIN, HEAT_PAD_PIN, FAN_PIN, DESIRED_TEMP, TEMP_OFFSET, DHT_UPDATE_TIME);
 
 LightRenderer *renderer = new PCA9685Renderer(MCP_COUNT, &tree, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
 
@@ -74,7 +84,8 @@ BaseControllerPtr controllers[] = {
         renderer,
         &heartbeat,
         lightSensor,
-        &sceneController
+        &sceneController,
+        &airConditioner
 };
 
 bool isEditMode() {

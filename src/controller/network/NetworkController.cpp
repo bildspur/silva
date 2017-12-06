@@ -15,7 +15,7 @@ NetworkController::NetworkController(const char *deviceName, const char *ssid, c
 void NetworkController::setup() {
     BaseController::setup();
     statusLed->setup();
-    statusLed->write(20);
+    statusLed->write(10);
 
     WiFi.hostname(deviceName);
 
