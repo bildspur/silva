@@ -17,3 +17,7 @@ bool Timer::elapsed() {
 
     return result;
 }
+
+void Timer::reset() {
+    previousMillis = millis();
+}

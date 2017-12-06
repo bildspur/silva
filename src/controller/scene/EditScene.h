@@ -25,7 +25,7 @@ public:
 
     void loop() override;
 
-    void updateUI();
+    void updateUI(bool timerReset = true);
 
     void selectLeaf(uint16_t index);
 

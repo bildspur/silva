@@ -16,6 +16,8 @@ public:
     explicit Timer(unsigned long waitTime);
 
     bool elapsed();
+
+    void reset();
 };
 
 

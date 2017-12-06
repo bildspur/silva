@@ -19,14 +19,17 @@ void EditScene::loop() {
     BaseScene::loop();
 
     if (timer->elapsed())
-        updateUI();
+        updateUI(false);
 }
 
-void EditScene::updateUI() {
+void EditScene::updateUI(bool timerReset) {
     LeafPtr leaf = tree->getLeaf(leafIndex);
 
     osc->send("/silva/selected/index", static_cast<float>(leafIndex));
     osc->send("/silva/selected/distance", static_cast<float>(leaf->getDistance()));
+
+    if(timerReset)
+        timer->reset();
 }
 
 void EditScene::selectLeaf(uint16_t index) {
