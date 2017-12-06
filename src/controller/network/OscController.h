@@ -18,7 +18,7 @@
 
 #include <functional>
 
-#define CHAR_BUFFER_SIZE 32
+#define CHAR_BUFFER_SIZE 16
 
 class OscController : public BaseController {
 private:

@@ -63,7 +63,6 @@ LightRenderer *renderer = new PCA9685Renderer(MCP_COUNT, &tree, MIN_BRIGHTNESS, 
 LightSensor *lightSensor = new BH1750Sensor(LIGHT_SENSOR_UPDATE_FREQ);
 
 // scenes
-auto isEditMode = false;
 auto treeScene = TreeScene(lightSensor, &tree);
 auto editScene = EditScene(&tree, &osc, EDIT_UI_TIME);
 
@@ -80,14 +79,25 @@ BaseControllerPtr controllers[] = {
         &sceneController
 };
 
-void handleOsc(OSCMessage &msg) {
-    msg.dispatch("/silva/isEdit", [](OSCMessage &msg) {
-        isEditMode = (msg.getFloat(0) > FLOAT_COMPARE);
+bool isEditMode() {
+    return sceneController.getActiveScene() == &editScene;
+}
 
-        if (isEditMode)
-            sceneController.setActiveScene(&editScene);
-        else
-            sceneController.setActiveScene(&treeScene);
+bool isTreeMode() {
+    return sceneController.getActiveScene() == &treeScene;
+}
+
+void handleOsc(OSCMessage &msg) {
+    msg.dispatch("/silva/scene/tree", [](OSCMessage &msg) {
+        sceneController.setActiveScene(&treeScene);
+
+        // setup scene
+        sceneController.getActiveScene()->setup();
+        heartbeat.sendHeartbeat();
+    });
+
+    msg.dispatch("/silva/scene/edit", [](OSCMessage &msg) {
+        sceneController.setActiveScene(&editScene);
 
         // setup scene
         sceneController.getActiveScene()->setup();
@@ -95,7 +105,7 @@ void handleOsc(OSCMessage &msg) {
     });
 
     // edit scene osc handlers
-    if (isEditMode) {
+    if (isEditMode()) {
         msg.dispatch("/silva/refresh", [](OSCMessage &msg) {
             editScene.updateUI();
         });
@@ -123,9 +133,7 @@ void handleOsc(OSCMessage &msg) {
 }
 
 void sendHeartbeat() {
-    OSCMessage msg("/silva/isEdit");
-    msg.add(isEditMode ? 1.0f : 0.0f);
-    osc.sendMessage(msg);
+    osc.send("/silva/scene/active", sceneController.getActiveScene()->getName());
 }
 
 void setup() {
