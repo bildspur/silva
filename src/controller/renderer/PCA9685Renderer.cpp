@@ -29,6 +29,10 @@ void PCA9685Renderer::setup() {
 
 void PCA9685Renderer::loop() {
     LightRenderer::loop();
+
+    // write data to pins
+    for(auto i = 0; i < deviceCount; i++)
+        devices[i]->writeAllPins();
 }
 
 void PCA9685Renderer::render(LeafPtr leaf) {
@@ -51,5 +55,5 @@ void PCA9685Renderer::render(LeafPtr leaf) {
                                    0, PCA9685_MAX_VALUE);
 
     // send data
-    device->getPin(leafPin).setValueAndWrite(static_cast<uint16_t>(round(pwmValue)));
+    device->getPin(leafPin).setValue(static_cast<uint16_t>(round(pwmValue)));
 }
