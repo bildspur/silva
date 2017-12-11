@@ -13,8 +13,8 @@ AutoRangeFinder<T>::AutoRangeFinder(uint16_t size) {
 
 template<typename T>
 void AutoRangeFinder<T>::calculate() {
-    T low = std::numeric_limits<T>::max();
-    T high = std::numeric_limits<T>::min();
+    T low = ARF_LOW;
+    T high = ARF_HIGH;
 
     auto iterationSize = (addCounter < size) ? addCounter : size;
 
@@ -50,28 +50,4 @@ T AutoRangeFinder<T>::getHigh() const {
 }
 
 template
-class AutoRangeFinder<uint8_t>;
-
-template
 class AutoRangeFinder<uint16_t>;
-
-template
-class AutoRangeFinder<uint32_t>;
-
-template
-class AutoRangeFinder<uint64_t>;
-
-template
-class AutoRangeFinder<float_t>;
-
-template
-class AutoRangeFinder<double_t>;
-
-template
-class AutoRangeFinder<short>;
-
-template
-class AutoRangeFinder<int>;
-
-template
-class AutoRangeFinder<long>;

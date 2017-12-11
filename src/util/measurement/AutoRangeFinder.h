@@ -8,7 +8,9 @@
 
 #include <cstdint>
 #include "CircularBuffer.h"
-#include <limits>
+
+#define ARF_LOW 0
+#define ARF_HIGH 65535
 
 template<typename T>
 
@@ -18,8 +20,8 @@ private:
 
     uint16_t size;
 
-    T low = std::numeric_limits<T>::max();
-    T high = std::numeric_limits<T>::min();
+    T low = ARF_LOW;
+    T high = ARF_HIGH;
 
     uint16_t addCounter = 0;
 
