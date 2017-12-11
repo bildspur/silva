@@ -35,6 +35,8 @@ public:
     T getLow() const;
 
     T getHigh() const;
+
+    T getMidpoint() const;
 };
 
 #endif //AUTORANGEFINDER_AUTORANGEFINDER_H

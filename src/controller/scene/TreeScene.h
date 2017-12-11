@@ -40,6 +40,10 @@ public:
     void updateLife();
 
     void updateLeafs();
+
+    int getLife() const;
+
+    AutoRangeFinder<uint16_t> *getRangeFinder() const;
 };
 
 

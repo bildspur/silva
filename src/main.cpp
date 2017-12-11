@@ -18,8 +18,8 @@
 // global
 #define SILVA_DEBUG true
 
-#define LEAF_COUNT 8
-#define MCP_COUNT 1
+#define LEAF_COUNT 5
+#define RENDER_DEVICE_COUNT 1
 
 #define LIGHT_SENSOR_UPDATE_FREQ 250
 
@@ -67,7 +67,7 @@ auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
 auto heartbeat = Heartbeat(HEARTBEAT_TIME);
 auto airConditioner = AirConditioner(DHT_PIN, HEAT_PAD_PIN, FAN_PIN, DESIRED_TEMP, TEMP_OFFSET, DHT_UPDATE_TIME);
 
-LightRenderer *renderer = new PCA9685Renderer(MCP_COUNT, &tree, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
+LightRenderer *renderer = new PCA9685Renderer(RENDER_DEVICE_COUNT, &tree, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
 
 // sensor
 LightSensor *lightSensor = new BH1750Sensor(LIGHT_SENSOR_UPDATE_FREQ);
@@ -154,9 +154,22 @@ void sendHeartbeat() {
         Serial.println(airConditioner.getHeatIndex());
 
         Serial.print("[LUX] Luminosity: ");
-        Serial.print(lightSensor->getLuminosity());
+        Serial.println(lightSensor->getLuminosity());
 
-        Serial.println("\n================");
+        Serial.print("[LED] 0");
+        Serial.println(leafs[0]->getBrightness());
+
+        Serial.print("[LIFE]: ");
+        Serial.println(treeScene.getLife());
+
+        Serial.print("[RF] Low: ");
+        Serial.print(treeScene.getRangeFinder()->getLow());
+        Serial.print(" High: ");
+        Serial.print(treeScene.getRangeFinder()->getHigh());
+        Serial.print(" Threshold: ");
+        Serial.println(treeScene.getRangeFinder()->getMidpoint());
+
+        Serial.println("================");
     }
 }
 

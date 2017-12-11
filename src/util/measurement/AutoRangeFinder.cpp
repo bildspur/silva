@@ -49,5 +49,10 @@ T AutoRangeFinder<T>::getHigh() const {
     return high;
 }
 
+template<typename T>
+T AutoRangeFinder<T>::getMidpoint() const {
+    return (high - low) / 2.0;
+}
+
 template
 class AutoRangeFinder<uint16_t>;

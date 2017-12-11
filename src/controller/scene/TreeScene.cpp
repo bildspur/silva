@@ -40,7 +40,7 @@ void TreeScene::updateLife() {
         updateAutoRange(luminosity);
 
     // change life
-    auto threshold = rangeFinder->getHigh() - rangeFinder->getLow();
+    auto threshold = rangeFinder->getMidpoint();
 
     if(luminosity < threshold)
         life->setTarget(LIFE_MIN);
@@ -66,4 +66,12 @@ void TreeScene::updateLeafs() {
         else
             leaf->turnOff();
     }
+}
+
+int TreeScene::getLife() const {
+    return life->getInt();
+}
+
+AutoRangeFinder<uint16_t> *TreeScene::getRangeFinder() const {
+    return rangeFinder;
 }
