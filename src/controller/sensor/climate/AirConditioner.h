@@ -45,6 +45,8 @@ public:
     void updateState();
 
     float getHeatIndex() const;
+
+    ConditionerState getState() const;
 };
 
 

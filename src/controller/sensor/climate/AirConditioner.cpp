@@ -38,18 +38,18 @@ void AirConditioner::loop() {
 
 void AirConditioner::updateState() {
     if (state == ConditionerState::STEADY) {
-        analogWrite(heatPadPin, LOW);
-        analogWrite(fanPin, LOW);
+        analogWrite(heatPadPin, 0);
+        analogWrite(fanPin, 0);
     }
 
     if (state == ConditionerState::HEATING) {
-        analogWrite(heatPadPin, HIGH);
-        analogWrite(fanPin, LOW);
+        analogWrite(heatPadPin, 255);
+        analogWrite(fanPin, 0);
     }
 
     if (state == ConditionerState::COOLING) {
-        analogWrite(heatPadPin, LOW);
-        analogWrite(fanPin, HIGH);
+        analogWrite(heatPadPin, 0);
+        analogWrite(fanPin, 255);
     }
 }
 
@@ -77,4 +77,8 @@ void AirConditioner::measure() {
 
 float AirConditioner::getHeatIndex() const {
     return heatIndex;
+}
+
+AirConditioner::ConditionerState AirConditioner::getState() const {
+    return state;
 }

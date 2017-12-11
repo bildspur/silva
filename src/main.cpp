@@ -16,6 +16,8 @@
 #include <controller/sensor/climate/AirConditioner.h>
 
 // global
+#define SILVA_DEBUG true
+
 #define LEAF_COUNT 8
 #define MCP_COUNT 1
 
@@ -30,8 +32,8 @@
 // network
 #define DEVICE_NAME "silva-master"
 
-#define SSID_NAME "Der Geraet"
-#define SSID_PASSWORD ""
+#define SSID_NAME "silva"
+#define SSID_PASSWORD "SilvaZauberwald"
 
 #define OTA_PASSWORD "bildspur"
 #define OTA_PORT 8266
@@ -44,10 +46,10 @@
 
 // climate
 #define DHT_PIN D5
-#define HEAT_PAD_PIN D6
-#define FAN_PIN D7
-#define DESIRED_TEMP 20.0
-#define TEMP_OFFSET 1.0f
+#define HEAT_PAD_PIN D7
+#define FAN_PIN D6
+#define DESIRED_TEMP 15.0
+#define TEMP_OFFSET 0.0f
 #define DHT_UPDATE_TIME 5000
 
 // typedefs
@@ -143,6 +145,19 @@ void handleOsc(OSCMessage &msg) {
 
 void sendHeartbeat() {
     osc.send("/silva/scene/active", sceneController.getActiveScene()->getName());
+
+    if(SILVA_DEBUG)
+    {
+        Serial.print("[AC] State: ");
+        Serial.print(airConditioner.getState());
+        Serial.print(" Temperature: ");
+        Serial.println(airConditioner.getHeatIndex());
+
+        Serial.print("[LUX] Luminosity: ");
+        Serial.print(lightSensor->getLuminosity());
+
+        Serial.println("\n================");
+    }
 }
 
 void setup() {
