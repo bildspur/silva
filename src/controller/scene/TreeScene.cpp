@@ -9,6 +9,7 @@ TreeScene::TreeScene(LightSensor *lightSensor, Tree *tree) : BaseScene("TreeScen
     this->lightSensor = lightSensor;
     this->rangeFinder = new AutoRangeFinder<uint16_t>(AUTO_RANGE_SIZE);
     this->rangeTimer = new Timer(AUTO_RANGE_FREQ);
+    this->life = new EasingValue(LIFE_MAX, LIFE_EASING);
 }
 
 void TreeScene::setup() {
@@ -28,6 +29,7 @@ void TreeScene::loop() {
     BaseScene::loop();
 
     updateLife();
+    updateLeafs();
 }
 
 void TreeScene::updateLife() {
@@ -37,15 +39,31 @@ void TreeScene::updateLife() {
     if(rangeTimer->elapsed())
         updateAutoRange(luminosity);
 
-    // add delta to life
-    auto average = rangeFinder->getHigh() - rangeFinder->getLow();
+    // change life
+    auto threshold = rangeFinder->getHigh() - rangeFinder->getLow();
 
-    // todo: use life value together with distance to turn on and off leafs
+    if(luminosity < threshold)
+        life->setTarget(LIFE_MIN);
+    else
+        life->setTarget(LIFE_MAX);
 
+    life->update();
     lastLuminosity = luminosity;
 }
 
 void TreeScene::updateAutoRange(uint16_t luminosity) {
     rangeFinder->addMeasurement(luminosity);
     rangeFinder->calculate();
+}
+
+void TreeScene::updateLeafs() {
+    // use life value together with distance to turn on and off leafs
+    for(auto i = 0; i < tree->getSize(); i++) {
+        auto leaf = tree->getLeaf(i);
+
+        if(life->get() < leaf->getDistance())
+            leaf->turnOn();
+        else
+            leaf->turnOff();
+    }
 }

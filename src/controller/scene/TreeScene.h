@@ -13,6 +13,10 @@
 #define AUTO_RANGE_SIZE 60
 #define AUTO_RANGE_FREQ (1000 * 30)
 
+#define LIFE_MIN 0
+#define LIFE_MAX 255
+#define LIFE_EASING 0.1
+
 class TreeScene : public BaseScene {
 private:
     LightSensor *lightSensor;
@@ -20,7 +24,7 @@ private:
     AutoRangeFinder<uint16_t> *rangeFinder;
     Timer* rangeTimer;
 
-    uint8_t life = 0;
+    EasingValue *life;
 
     uint16_t lastLuminosity = 0;
 
@@ -34,6 +38,8 @@ public:
     void updateAutoRange(uint16_t luminosity);
 
     void updateLife();
+
+    void updateLeafs();
 };
 
 
