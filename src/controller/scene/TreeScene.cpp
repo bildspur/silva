@@ -42,6 +42,10 @@ void TreeScene::updateLife() {
     // change life
     auto threshold = rangeFinder->getMidpoint();
 
+    // check midpoint same level
+    if(threshold == 0)
+        threshold = static_cast<uint16_t>(rangeFinder->getHigh() / 2);
+
     if(luminosity < threshold)
         life->setTarget(LIFE_MIN);
     else
@@ -52,6 +56,10 @@ void TreeScene::updateLife() {
 }
 
 void TreeScene::updateAutoRange(uint16_t luminosity) {
+    // probability check for luminosity
+    if(luminosity == ARF_HIGH)
+        return;
+
     rangeFinder->addMeasurement(luminosity);
     rangeFinder->calculate();
 }
