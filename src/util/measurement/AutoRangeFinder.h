@@ -20,8 +20,8 @@ private:
 
     uint16_t size;
 
-    T low = ARF_LOW;
-    T high = ARF_HIGH;
+    T low = ARF_HIGH;
+    T high = ARF_LOW;
 
     uint16_t addCounter = 0;
 

@@ -46,6 +46,9 @@ void TreeScene::updateLife() {
     if(threshold == 0)
         threshold = static_cast<uint16_t>(rangeFinder->getHigh() / 2);
 
+    // hard workaround
+    threshold = FIXED_THRESHOLD;
+
     if(luminosity < threshold)
         life->setTarget(LIFE_MIN);
     else
@@ -69,7 +72,7 @@ void TreeScene::updateLeafs() {
     for(auto i = 0; i < tree->getSize(); i++) {
         auto leaf = tree->getLeaf(i);
 
-        if(leaf->getDistance() < life->get())
+        if(leaf->getDistance() <= life->get())
             leaf->turnOn();
         else
             leaf->turnOff();

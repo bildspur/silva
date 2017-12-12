@@ -18,8 +18,8 @@
 // global
 #define SILVA_DEBUG true
 
-#define LEAF_COUNT 5
-#define RENDER_DEVICE_COUNT 1
+#define LEAF_COUNT 26
+#define RENDER_DEVICE_COUNT 2
 
 #define LIGHT_SENSOR_UPDATE_FREQ 250
 

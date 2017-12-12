@@ -15,7 +15,7 @@
 #define LEAF_MIN_BRIGHTNESS 0.0f
 #define LEAF_MAX_BRIGHTNESS 1.0f
 
-#define EASING_SPEED 0.01
+#define EASING_SPEED 0.1
 
 class Leaf {
 private:

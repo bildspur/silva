@@ -13,8 +13,8 @@ AutoRangeFinder<T>::AutoRangeFinder(uint16_t size) {
 
 template<typename T>
 void AutoRangeFinder<T>::calculate() {
-    T low = ARF_LOW;
-    T high = ARF_HIGH;
+    T low = ARF_HIGH;
+    T high = ARF_LOW;
 
     auto iterationSize = (addCounter < size) ? addCounter : size;
 
@@ -57,8 +57,8 @@ T AutoRangeFinder<T>::getMidpoint() const {
 template<typename T>
 void AutoRangeFinder<T>::clear() {
     addCounter = 0;
-    low = ARF_LOW;
-    high = ARF_HIGH;
+    low = ARF_HIGH;
+    high = ARF_LOW;
 }
 
 template

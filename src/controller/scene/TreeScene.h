@@ -15,7 +15,9 @@
 
 #define LIFE_MIN 0
 #define LIFE_MAX 255
-#define LIFE_EASING 0.1
+#define LIFE_EASING 0.01
+
+#define FIXED_THRESHOLD 100
 
 class TreeScene : public BaseScene {
 private:
