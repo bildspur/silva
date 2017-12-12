@@ -61,7 +61,7 @@ void TreeScene::updateLeafs() {
     for(auto i = 0; i < tree->getSize(); i++) {
         auto leaf = tree->getLeaf(i);
 
-        if(life->get() < leaf->getDistance())
+        if(leaf->getDistance() < life->get())
             leaf->turnOn();
         else
             leaf->turnOff();
