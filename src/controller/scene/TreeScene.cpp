@@ -10,6 +10,8 @@ TreeScene::TreeScene(LightSensor *lightSensor, Tree *tree) : BaseScene("TreeScen
     this->rangeFinder = new AutoRangeFinder<uint16_t>(AUTO_RANGE_SIZE);
     this->rangeTimer = new Timer(AUTO_RANGE_FREQ);
     this->life = new EasingValue(LIFE_MAX, LIFE_EASING);
+
+    this->average = new MovingAverage();
 }
 
 void TreeScene::setup() {
@@ -36,9 +38,13 @@ void TreeScene::updateLife() {
     // use light sensor to change life value (0-255)
     auto luminosity = lightSensor->getLuminosity();
 
+    if(firstLoop)
+        average->reset(luminosity);
+
     if(firstLoop || rangeTimer->elapsed())
     {
         updateAutoRange(luminosity);
+        average->update(luminosity);
         firstLoop = false;
     }
 
@@ -88,4 +94,8 @@ int TreeScene::getLife() const {
 
 AutoRangeFinder<uint16_t> *TreeScene::getRangeFinder() const {
     return rangeFinder;
+}
+
+MovingAverage::real TreeScene::getAverage() {
+    return average->get();
 }

@@ -8,6 +8,7 @@
 
 #include <controller/sensor/light/LightSensor.h>
 #include <util/measurement/AutoRangeFinder.h>
+#include <MovingAverage.h>
 #include "BaseScene.h"
 
 #define AUTO_RANGE_SIZE 60
@@ -32,6 +33,8 @@ private:
 
     bool firstLoop = true;
 
+    MovingAverage *average;
+
 public:
     explicit TreeScene(LightSensor *lightSensor, Tree *tree);
 
@@ -48,6 +51,8 @@ public:
     int getLife() const;
 
     AutoRangeFinder<uint16_t> *getRangeFinder() const;
+
+    MovingAverage::real getAverage();
 };
 
 

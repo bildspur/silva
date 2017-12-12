@@ -180,6 +180,9 @@ void sendHeartbeat() {
         Serial.print(" Threshold: ");
         Serial.println(treeScene.getRangeFinder()->getMidpoint());
 
+        Serial.print("[MA]: ");
+        Serial.println(treeScene.getAverage());
+
         Serial.println("================");
     }
 }
