@@ -39,5 +39,5 @@ uint8_t TSL2561Sensor::normalize(uint16_t value) {
 void TSL2561Sensor::measure() {
     LightSensor::measure();
 
-    luminostiy = lightMeter->getLuminosity(TSL2561_VISIBLE);
+    luminosity = lightMeter->getLuminosity(TSL2561_VISIBLE);
 }

@@ -22,7 +22,7 @@ void BH1750Sensor::loop() {
 void BH1750Sensor::measure() {
     LightSensor::measure();
 
-    luminostiy = lightMeter->readLightLevel();
+    luminosity = lightMeter->readLightLevel();
 }
 
 uint16_t BH1750Sensor::getLuminosity() {

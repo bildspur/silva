@@ -16,7 +16,7 @@ private:
 protected:
     explicit LightSensor(unsigned int updateFrequency = 250);
 
-    uint16_t luminostiy = 0;
+    uint16_t luminosity = 0;
 
     Timer *timer;
 

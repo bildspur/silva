@@ -24,7 +24,7 @@ void AutoRangeFinder<T>::calculate() {
             low = value;
 
         if (value > high)
-            high = value;;
+            high = value;
     }
 
     this->low = low;

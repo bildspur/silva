@@ -23,7 +23,7 @@ void LightSensor::loop() {
 }
 
 uint16_t LightSensor::getLuminosity() {
-    return luminostiy;
+    return luminosity;
 }
 
 uint8_t LightSensor::normalize(uint16_t value) {
