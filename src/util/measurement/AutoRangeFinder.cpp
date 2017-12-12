@@ -54,5 +54,12 @@ T AutoRangeFinder<T>::getMidpoint() const {
     return (high - low) / 2.0;
 }
 
+template<typename T>
+void AutoRangeFinder<T>::clear() {
+    addCounter = 0;
+    low = ARF_LOW;
+    high = ARF_HIGH;
+}
+
 template
 class AutoRangeFinder<uint16_t>;

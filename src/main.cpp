@@ -115,6 +115,10 @@ void handleOsc(OSCMessage &msg) {
         heartbeat.sendHeartbeat();
     });
 
+    msg.dispatch("/silva/range/clear", [](OSCMessage &msg) {
+        treeScene.getRangeFinder()->clear();
+    });
+
     msg.dispatch("/silva/debug/refresh", [](OSCMessage &msg) {
         osc.send("/silva/debug/hic", airConditioner.getHeatIndex());
         osc.send("/silva/debug/life", treeScene.getLife());

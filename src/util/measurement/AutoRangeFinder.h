@@ -37,6 +37,8 @@ public:
     T getHigh() const;
 
     T getMidpoint() const;
+
+    void clear();
 };
 
 #endif //AUTORANGEFINDER_AUTORANGEFINDER_H
