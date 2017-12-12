@@ -36,8 +36,11 @@ void TreeScene::updateLife() {
     // use light sensor to change life value (0-255)
     auto luminosity = lightSensor->getLuminosity();
 
-    if(rangeTimer->elapsed())
+    if(firstLoop || rangeTimer->elapsed())
+    {
         updateAutoRange(luminosity);
+        firstLoop = false;
+    }
 
     // change life
     auto threshold = rangeFinder->getMidpoint();

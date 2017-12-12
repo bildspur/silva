@@ -30,6 +30,8 @@ private:
 
     uint16_t lastLuminosity = 0;
 
+    bool firstLoop = true;
+
 public:
     explicit TreeScene(LightSensor *lightSensor, Tree *tree);
 

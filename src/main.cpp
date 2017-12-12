@@ -86,8 +86,8 @@ BaseControllerPtr controllers[] = {
         renderer,
         &heartbeat,
         lightSensor,
-        &sceneController,
-        &airConditioner
+        &airConditioner,
+        &sceneController
 };
 
 bool isEditMode() {
