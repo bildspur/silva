@@ -115,6 +115,13 @@ void handleOsc(OSCMessage &msg) {
         heartbeat.sendHeartbeat();
     });
 
+    msg.dispatch("/silva/debug/refresh", [](OSCMessage &msg) {
+        osc.send("/silva/debug/hic", airConditioner.getHeatIndex());
+        osc.send("/silva/debug/life", treeScene.getLife());
+        osc.send("/silva/debug/lux", lightSensor->getLuminosity());
+        osc.send("/silva/debug/threshold", treeScene.getRangeFinder()->getMidpoint());
+    });
+
     // edit scene osc handlers
     if (isEditMode()) {
         msg.dispatch("/silva/refresh", [](OSCMessage &msg) {
