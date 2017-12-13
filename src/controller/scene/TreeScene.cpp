@@ -58,6 +58,9 @@ void TreeScene::updateLife() {
     // hard workaround
     threshold = FIXED_THRESHOLD;
 
+    // ma threshold
+    threshold = static_cast<uint16_t>(average->get() / 3.0);
+
     if(luminosity < threshold)
         life->setTarget(LIFE_MIN);
     else
