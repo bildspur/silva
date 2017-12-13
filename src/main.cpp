@@ -14,6 +14,7 @@
 #include <controller/scene/SceneController.h>
 #include <controller/renderer/PCA9685Renderer.h>
 #include <controller/sensor/climate/AirConditioner.h>
+#include <controller/scene/StarScene.h>
 
 // global
 #define SILVA_DEBUG true
@@ -75,6 +76,7 @@ LightSensor *lightSensor = new BH1750Sensor(LIGHT_SENSOR_UPDATE_FREQ);
 // scenes
 auto treeScene = TreeScene(lightSensor, &tree);
 auto editScene = EditScene(&tree, &osc, EDIT_UI_TIME);
+auto starScene = StarScene(&tree);
 
 auto sceneController = SceneController(&treeScene);
 
@@ -109,6 +111,14 @@ void handleOsc(OSCMessage &msg) {
 
     msg.dispatch("/silva/scene/edit", [](OSCMessage &msg) {
         sceneController.setActiveScene(&editScene);
+
+        // setup scene
+        sceneController.getActiveScene()->setup();
+        heartbeat.sendHeartbeat();
+    });
+
+    msg.dispatch("/silva/scene/stars", [](OSCMessage &msg) {
+        sceneController.setActiveScene(&starScene);
 
         // setup scene
         sceneController.getActiveScene()->setup();
