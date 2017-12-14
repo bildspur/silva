@@ -4,6 +4,7 @@
 
 #include <controller/sensor/light/LightSensor.h>
 #include "TreeScene.h"
+#include "StarScene.h"
 
 TreeScene::TreeScene(LightSensor *lightSensor, Tree *tree) : BaseScene("TreeScene", tree) {
     this->lightSensor = lightSensor;
@@ -17,8 +18,7 @@ TreeScene::TreeScene(LightSensor *lightSensor, Tree *tree) : BaseScene("TreeScen
 void TreeScene::setup() {
     BaseScene::setup();
 
-    for(auto i = 0; i < tree->getSize(); i++)
-    {
+    for (auto i = 0; i < tree->getSize(); i++) {
         auto leaf = tree->getLeaf(i);
 
         // turn off light and dim in (smooth intro)
@@ -38,11 +38,10 @@ void TreeScene::updateLife() {
     // use light sensor to change life value (0-255)
     auto luminosity = lightSensor->getLuminosity();
 
-    if(firstLoop)
+    if (firstLoop)
         average->reset(luminosity);
 
-    if(firstLoop || rangeTimer->elapsed())
-    {
+    if (firstLoop || rangeTimer->elapsed()) {
         updateAutoRange(luminosity);
         average->update(luminosity);
         firstLoop = false;
@@ -52,7 +51,7 @@ void TreeScene::updateLife() {
     auto threshold = rangeFinder->getMidpoint();
 
     // check midpoint same level
-    if(threshold == 0)
+    if (threshold == 0)
         threshold = static_cast<uint16_t>(rangeFinder->getHigh() / 2);
 
     // hard workaround
@@ -61,7 +60,7 @@ void TreeScene::updateLife() {
     // ma threshold
     threshold = static_cast<uint16_t>(average->get() / 3.0);
 
-    if(luminosity < threshold)
+    if (luminosity < threshold)
         life->setTarget(LIFE_MIN);
     else
         life->setTarget(LIFE_MAX);
@@ -72,7 +71,7 @@ void TreeScene::updateLife() {
 
 void TreeScene::updateAutoRange(uint16_t luminosity) {
     // probability check for luminosity
-    if(luminosity == ARF_HIGH)
+    if (luminosity == ARF_HIGH)
         return;
 
     rangeFinder->addMeasurement(luminosity);
@@ -81,13 +80,15 @@ void TreeScene::updateAutoRange(uint16_t luminosity) {
 
 void TreeScene::updateLeafs() {
     // use life value together with distance to turn on and off leafs
-    for(auto i = 0; i < tree->getSize(); i++) {
+    for (auto i = 0; i < tree->getSize(); i++) {
         auto leaf = tree->getLeaf(i);
 
-        if(leaf->getDistance() <= life->get())
-            leaf->turnOn();
-        else
+        if (leaf->getDistance() <= life->get()) {
+            //leaf->turnOn();
+            applyStarPattern(leaf);
+        } else {
             leaf->turnOff();
+        }
     }
 }
 
@@ -101,4 +102,15 @@ AutoRangeFinder<uint16_t> *TreeScene::getRangeFinder() const {
 
 MovingAverage::real TreeScene::getAverage() {
     return average->get();
+}
+
+void TreeScene::applyStarPattern(LeafPtr leaf) {
+// check if leaf is on
+    if (leaf->getBrightness() > (STAR_LEAF_OFF + 0.1)) {
+        if (StarScene::isRandomCalled(RANDOM_OFF_FACTOR))
+            leaf->setBrightness(STAR_LEAF_OFF);
+    } else {
+        if (StarScene::isRandomCalled(RANDOM_ON_FACTOR))
+            leaf->setBrightness(static_cast<float>(random(static_cast<long>(STAR_LEAF_OFF * 100), 100) / 100.0));
+    }
 }

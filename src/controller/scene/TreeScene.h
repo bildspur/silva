@@ -20,6 +20,8 @@
 
 #define FIXED_THRESHOLD 100
 
+#define STAR_LEAF_OFF 0.75
+
 class TreeScene : public BaseScene {
 private:
     LightSensor *lightSensor;
@@ -47,6 +49,8 @@ public:
     void updateLife();
 
     void updateLeafs();
+
+    void applyStarPattern(LeafPtr leaf);
 
     int getLife() const;
 

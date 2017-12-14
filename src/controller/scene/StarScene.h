@@ -8,12 +8,10 @@
 
 #include "BaseScene.h"
 
-class StarScene : public BaseScene {
-private:
-    float randomOnFactor = 0.95;
-    float randomOffFactor = 0.8;
-    float fadeSpeed = 0.01;
+#define RANDOM_ON_FACTOR 0.99
+#define RANDOM_OFF_FACTOR 0.95
 
+class StarScene : public BaseScene {
 public:
     StarScene(Tree *tree);
 
@@ -21,7 +19,7 @@ public:
 
     void loop() override;
 
-    bool isRandomCalled(float factor);
+    static bool isRandomCalled(float factor);
 };
 
 

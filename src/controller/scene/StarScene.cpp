@@ -32,12 +32,12 @@ void StarScene::loop() {
         // check if leaf is on
         if(leaf->getBrightness() > 0.75)
         {
-            if(isRandomCalled(randomOffFactor))
+            if(isRandomCalled(RANDOM_OFF_FACTOR))
                 leaf->turnOff();
         }
         else
         {
-            if(isRandomCalled(randomOnFactor))
+            if(isRandomCalled(RANDOM_ON_FACTOR))
                 leaf->setBrightness(static_cast<float>(random(50, 100) / 100.0));
         }
     }
