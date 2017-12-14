@@ -20,7 +20,7 @@
 
 #define FIXED_THRESHOLD 100
 
-#define STAR_LEAF_OFF 0.75
+#define STAR_LEAF_OFF 0.15
 
 class TreeScene : public BaseScene {
 private:

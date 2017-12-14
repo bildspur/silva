@@ -8,8 +8,8 @@
 
 #include "BaseScene.h"
 
-#define RANDOM_ON_FACTOR 0.99
-#define RANDOM_OFF_FACTOR 0.95
+#define RANDOM_ON_FACTOR 0.95
+#define RANDOM_OFF_FACTOR 0.9
 
 class StarScene : public BaseScene {
 public:
