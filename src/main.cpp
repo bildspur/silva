@@ -78,7 +78,7 @@ LightSensor *lightSensor = new BH1750Sensor(LIGHT_SENSOR_UPDATE_FREQ);
 auto treeScene = TreeScene(lightSensor, &tree);
 auto editScene = EditScene(&tree, &osc, EDIT_UI_TIME);
 auto starScene = StarScene(&tree);
-auto performanceScene = PerformanceScene(&tree);
+auto performanceScene = PerformanceScene(lightSensor, &tree);
 
 auto sceneController = SceneController(&treeScene);
 

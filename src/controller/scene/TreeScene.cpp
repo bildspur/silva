@@ -24,6 +24,9 @@ void TreeScene::setup() {
         leaf->turnOff(false);
         leaf->turnOn();
     }
+
+    // reset first loop
+    firstLoop = true;
 }
 
 void TreeScene::loop() {
