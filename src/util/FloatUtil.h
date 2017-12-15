@@ -12,6 +12,7 @@ protected:
 
 public:
     static float map(float value, float minIn, float maxIn, float minOut, float maxOut);
+    static float limit(float value, float min, float max);
 };
 
 

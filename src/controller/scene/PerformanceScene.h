@@ -31,6 +31,12 @@ public:
     void loop() override;
 
     uint16_t getThreshold();
+
+    float getLightIntensity();
+
+    uint16_t getAverage();
+
+    void runPerformance();
 };
 
 
