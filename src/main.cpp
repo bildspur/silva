@@ -15,6 +15,7 @@
 #include <controller/renderer/PCA9685Renderer.h>
 #include <controller/sensor/climate/AirConditioner.h>
 #include <controller/scene/StarScene.h>
+#include <controller/scene/PerformanceScene.h>
 
 // global
 #define SILVA_DEBUG true
@@ -77,6 +78,7 @@ LightSensor *lightSensor = new BH1750Sensor(LIGHT_SENSOR_UPDATE_FREQ);
 auto treeScene = TreeScene(lightSensor, &tree);
 auto editScene = EditScene(&tree, &osc, EDIT_UI_TIME);
 auto starScene = StarScene(&tree);
+auto performanceScene = PerformanceScene(&tree);
 
 auto sceneController = SceneController(&treeScene);
 
@@ -100,29 +102,30 @@ bool isTreeMode() {
     return sceneController.getActiveScene() == &treeScene;
 }
 
+void changeScene(BaseScene *scene)
+{
+    sceneController.setActiveScene(scene);
+
+    // setup scene
+    sceneController.getActiveScene()->setup();
+    heartbeat.sendHeartbeat();
+}
+
 void handleOsc(OSCMessage &msg) {
     msg.dispatch("/silva/scene/tree", [](OSCMessage &msg) {
-        sceneController.setActiveScene(&treeScene);
-
-        // setup scene
-        sceneController.getActiveScene()->setup();
-        heartbeat.sendHeartbeat();
+        changeScene(&treeScene);
     });
 
     msg.dispatch("/silva/scene/edit", [](OSCMessage &msg) {
-        sceneController.setActiveScene(&editScene);
-
-        // setup scene
-        sceneController.getActiveScene()->setup();
-        heartbeat.sendHeartbeat();
+        changeScene(&editScene);
     });
 
     msg.dispatch("/silva/scene/stars", [](OSCMessage &msg) {
-        sceneController.setActiveScene(&starScene);
+        changeScene(&starScene);
+    });
 
-        // setup scene
-        sceneController.getActiveScene()->setup();
-        heartbeat.sendHeartbeat();
+    msg.dispatch("/silva/scene/performance", [](OSCMessage &msg) {
+        changeScene(&performanceScene);
     });
 
     msg.dispatch("/silva/range/clear", [](OSCMessage &msg) {

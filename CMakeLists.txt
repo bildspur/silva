@@ -16,12 +16,6 @@ add_custom_target(
 )
 
 add_custom_target(
-    PLATFORMIO_UPLOAD_OTA ALL
-    COMMAND ${PLATFORMIO_CMD} -f -c clion run -t upload --upload-port silva-master.local
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-add_custom_target(
     PLATFORMIO_CLEAN ALL
     COMMAND ${PLATFORMIO_CMD} -f -c clion run --target clean
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
@@ -57,4 +51,4 @@ add_custom_target(
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_executable(${PROJECT_NAME} ${SRC_LIST} src/controller/scene/StarScene.cpp src/controller/scene/StarScene.h)
+add_executable(${PROJECT_NAME} ${SRC_LIST} src/controller/scene/PerformanceScene.cpp src/controller/scene/PerformanceScene.h)
