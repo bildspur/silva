@@ -57,7 +57,7 @@ void PerformanceScene::runPerformance()
 
         // calculate sinus value
         auto distanceRadians = FloatUtil::map(leaf->getDistance(), MIN_DISTANCE, MAX_DISTANCE, 0.0, TWO_PI);
-        auto brightness = static_cast<float>(sin(t * intensity + distanceRadians));
+        auto brightness = static_cast<float>(0.5*(1+sin(t * intensity + distanceRadians)));
 
         // directly set
         leaf->setBrightness(brightness, false);
