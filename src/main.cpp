@@ -129,14 +129,14 @@ void handleOsc(OSCMessage &msg) {
     });
 
     msg.dispatch("/silva/range/clear", [](OSCMessage &msg) {
-        treeScene.getRangeFinder()->clear();
+        // do nothing
     });
 
     msg.dispatch("/silva/debug/refresh", [](OSCMessage &msg) {
         osc.send("/silva/debug/hic", airConditioner.getHeatIndex());
         osc.send("/silva/debug/life", treeScene.getLife());
         osc.send("/silva/debug/lux", lightSensor->getLuminosity());
-        osc.send("/silva/debug/threshold", treeScene.getRangeFinder()->getMidpoint());
+        osc.send("/silva/debug/threshold", treeScene.getThreshold());
     });
 
     // edit scene osc handlers
@@ -186,12 +186,8 @@ void sendHeartbeat() {
         Serial.print("[LIFE]: ");
         Serial.println(treeScene.getLife());
 
-        Serial.print("[RF] Low: ");
-        Serial.print(treeScene.getRangeFinder()->getLow());
-        Serial.print(" High: ");
-        Serial.print(treeScene.getRangeFinder()->getHigh());
-        Serial.print(" Threshold: ");
-        Serial.println(treeScene.getRangeFinder()->getMidpoint());
+        Serial.print("[EMA] Threshold: ");
+        Serial.println(treeScene.getThreshold());
 
         Serial.print("[MA]: ");
         Serial.println(treeScene.getAverage());

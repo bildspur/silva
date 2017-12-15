@@ -8,8 +8,7 @@
 
 TreeScene::TreeScene(LightSensor *lightSensor, Tree *tree) : BaseScene("TreeScene", tree) {
     this->lightSensor = lightSensor;
-    this->rangeFinder = new AutoRangeFinder<uint16_t>(AUTO_RANGE_SIZE);
-    this->rangeTimer = new Timer(AUTO_RANGE_FREQ);
+    this->averageTimer = new Timer(MOVING_AVERAGE_FREQ);
     this->life = new EasingValue(LIFE_MAX, LIFE_EASING);
 
     this->average = new MovingAverage();
@@ -41,24 +40,16 @@ void TreeScene::updateLife() {
     if (firstLoop)
         average->reset(luminosity);
 
-    if (firstLoop || rangeTimer->elapsed()) {
-        updateAutoRange(luminosity);
-        average->update(luminosity);
+    if (firstLoop || averageTimer->elapsed()) {
+        // only update if is not under threshold (only high values count)
+        if(luminosity >= getThreshold()) {
+            average->update(luminosity);
+        }
         firstLoop = false;
     }
 
-    // change life
-    auto threshold = rangeFinder->getMidpoint();
-
-    // check midpoint same level
-    if (threshold == 0)
-        threshold = static_cast<uint16_t>(rangeFinder->getHigh() / 2);
-
-    // hard workaround
-    threshold = FIXED_THRESHOLD;
-
     // ma threshold
-    threshold = static_cast<uint16_t>(average->get() / 3.0);
+    auto threshold = getThreshold();
 
     if (luminosity < threshold)
         life->setTarget(LIFE_MIN);
@@ -66,16 +57,6 @@ void TreeScene::updateLife() {
         life->setTarget(LIFE_MAX);
 
     life->update();
-    lastLuminosity = luminosity;
-}
-
-void TreeScene::updateAutoRange(uint16_t luminosity) {
-    // probability check for luminosity
-    if (luminosity == ARF_HIGH)
-        return;
-
-    rangeFinder->addMeasurement(luminosity);
-    rangeFinder->calculate();
 }
 
 void TreeScene::updateLeafs() {
@@ -96,10 +77,6 @@ int TreeScene::getLife() const {
     return life->getInt();
 }
 
-AutoRangeFinder<uint16_t> *TreeScene::getRangeFinder() const {
-    return rangeFinder;
-}
-
 MovingAverage::real TreeScene::getAverage() {
     return average->get();
 }
@@ -113,4 +90,8 @@ void TreeScene::applyStarPattern(LeafPtr leaf) {
         if (StarScene::isRandomCalled(RANDOM_ON_FACTOR))
             leaf->setBrightness(static_cast<float>(random(static_cast<long>(STAR_LEAF_OFF * 100), 100) / 100.0));
     }
+}
+
+uint16_t TreeScene::getThreshold() {
+    return static_cast<uint16_t>(average->get() / TREE_LUX_THRESHOLD);
 }

@@ -11,30 +11,25 @@
 #include <MovingAverage.h>
 #include "BaseScene.h"
 
-#define AUTO_RANGE_SIZE 60
-#define AUTO_RANGE_FREQ (1000 * 30)
+#define MOVING_AVERAGE_FREQ (1000 * 30)
 
 #define LIFE_MIN 0
 #define LIFE_MAX 255
 #define LIFE_EASING 0.01
 
-#define FIXED_THRESHOLD 100
-
 #define STAR_LEAF_OFF 0.15
+
+#define TREE_LUX_THRESHOLD 3.0
 
 class TreeScene : public BaseScene {
 private:
     LightSensor *lightSensor;
 
-    AutoRangeFinder<uint16_t> *rangeFinder;
-    Timer* rangeTimer;
-
     EasingValue *life;
-
-    uint16_t lastLuminosity = 0;
 
     bool firstLoop = true;
 
+    Timer* averageTimer;
     MovingAverage *average;
 
 public:
@@ -44,8 +39,6 @@ public:
 
     void loop() override;
 
-    void updateAutoRange(uint16_t luminosity);
-
     void updateLife();
 
     void updateLeafs();
@@ -54,9 +47,9 @@ public:
 
     int getLife() const;
 
-    AutoRangeFinder<uint16_t> *getRangeFinder() const;
-
     MovingAverage::real getAverage();
+
+    uint16_t getThreshold();
 };
 
 

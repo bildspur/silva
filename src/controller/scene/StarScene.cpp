@@ -17,7 +17,7 @@ void StarScene::setup() {
     {
         auto leaf = tree->getLeaf(i);
 
-        // turn off light and dim in (smooth intro)
+        // turn off light
         leaf->turnOff(false);
     }
 }
