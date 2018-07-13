@@ -1,7 +1,9 @@
 package ch.bildspur.silva
 
+import ch.bildspur.silva.view.UIController
 import processing.core.PApplet
 import processing.core.PConstants
+import processing.core.PImage
 
 
 /**
@@ -29,18 +31,22 @@ class Sketch : PApplet() {
         }
     }
 
-    init {
-    }
+    val ui = UIController(this)
 
     override fun settings() {
         size(WINDOW_WIDTH, WINDOW_HEIGHT, PConstants.FX2D)
     }
 
     override fun setup() {
+        surface.setTitle("$NAME - $VERSION")
+        surface.setIcon(loadImage("images/silva-logo-128.png"))
+
+        ui.setup(g)
     }
 
     override fun draw() {
         background(5)
+        ui.render()
     }
 
     fun run()

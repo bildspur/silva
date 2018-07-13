@@ -36,6 +36,12 @@ dependencies {
     compile group: 'org.processing', name: 'core', version: '3.3.7'
     compile group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2'
     compile group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2'
+
+    // controlp5
+    compile files('lib/controlP5/controlP5.jar')
+
+    // oscp5
+    //compile files('lib/oscP5/oscP5.jar')
 }
 
 compileKotlin {
