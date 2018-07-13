@@ -3,6 +3,7 @@ package ch.bildspur.silva
 import ch.bildspur.silva.configuration.ConfigurationController
 import ch.bildspur.silva.model.AppConfig
 import ch.bildspur.silva.model.Leaf
+import ch.bildspur.silva.util.ExtendedRandom
 import ch.bildspur.silva.view.UIController
 import processing.core.PApplet
 import processing.core.PConstants
@@ -39,9 +40,11 @@ class Sketch : PApplet() {
 
     private val ui = UIController(this)
 
-    val config = ConfigurationController()
+    private val config = ConfigurationController()
 
     var appConfig = AppConfig()
+
+    private val rnd = ExtendedRandom()
 
     override fun settings() {
         size(WINDOW_WIDTH, WINDOW_HEIGHT, PConstants.P2D)
@@ -55,6 +58,7 @@ class Sketch : PApplet() {
         surface.setIcon(loadImage("images/silva-logo-128.png"))
 
         appConfig = config.loadAppConfig()
+        initAppConfig()
 
         ui.setup(g)
     }
@@ -83,5 +87,28 @@ class Sketch : PApplet() {
 
     override fun mouseReleased() {
         ui.mouseReleased(PVector(mouseX.toFloat(), mouseY.toFloat()))
+    }
+
+    fun loadAppConfig() {
+        appConfig = config.loadAppConfig()
+    }
+
+    fun initAppConfig()
+    {
+        if(ui.isInitialized)
+            ui.map.appConfig = appConfig
+    }
+
+    fun createNewProject() {
+        appConfig = AppConfig()
+        (0 until appConfig.defaultLeafCount).forEach {
+            val leaf = Leaf(it)
+            leaf.position.target = PVector.random2D().mult(rnd.randomFloat(50f, 300f))
+            appConfig.leafs.add(leaf)
+        }
+    }
+
+    fun saveAppConfig() {
+        config.saveAppConfig(appConfig)
     }
 }

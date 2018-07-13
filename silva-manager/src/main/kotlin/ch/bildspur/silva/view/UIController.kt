@@ -1,10 +1,7 @@
 package ch.bildspur.silva.view
 
 import ch.bildspur.silva.Sketch
-import ch.bildspur.silva.model.AppConfig
-import ch.bildspur.silva.model.Leaf
 import ch.bildspur.silva.util.ColorMode
-import ch.bildspur.silva.util.ExtendedRandom
 import ch.bildspur.silva.util.translate
 import controlP5.ControlP5
 import processing.core.PConstants
@@ -17,8 +14,6 @@ class UIController(private val sketch: Sketch) {
     private lateinit var cp5: ControlP5
     private lateinit var canvas: PGraphics
 
-    private val rnd = ExtendedRandom()
-
     lateinit var map: LeafMap
 
     private val padding = 20f
@@ -30,6 +25,8 @@ class UIController(private val sketch: Sketch) {
     private var h = padding + 30f
 
     private val mapPosition = PVector()
+
+    var isInitialized = false
 
     fun setup(canvas: PGraphics) {
         this.canvas = canvas
@@ -47,6 +44,7 @@ class UIController(private val sketch: Sketch) {
         cp5.setColorActive(ColorMode.color(255,132,124))
 
         setupControls()
+        isInitialized = true
     }
 
     private fun setupControls() {
@@ -57,27 +55,23 @@ class UIController(private val sketch: Sketch) {
                 .setPosition(padding, h)
                 .setSize(controlWidth, controlHeight)
                 .onClick {
-                    sketch.appConfig.leafs.clear()
-                    (0 until sketch.appConfig.defaultLeafCount).forEach {
-                        val leaf = Leaf(it)
-                        leaf.position.target = PVector.random2D().mult(rnd.randomFloat(50f, 300f))
-                        sketch.appConfig.leafs.add(leaf)
-                    }
+                    sketch.createNewProject()
+                    sketch.initAppConfig()
                 }
 
         cp5.addButton("Load")
                 .setPosition(padding + (hpadding + controlWidth), h)
                 .setSize(controlWidth, controlHeight)
                 .onClick {
-                    sketch.appConfig = sketch.config.loadAppConfig()
-                    map.appConfig = sketch.appConfig
+                    sketch.loadAppConfig()
+                    sketch.initAppConfig()
                 }
 
         cp5.addButton("Save")
                 .setPosition(padding + (2 * (hpadding + controlWidth)).roundToInt(), h)
                 .setSize(controlWidth, controlHeight)
                 .onClick {
-                    sketch.config.saveAppConfig(sketch.appConfig)
+                    sketch.saveAppConfig()
                 }
         h += hpadding + controlHeight
 
