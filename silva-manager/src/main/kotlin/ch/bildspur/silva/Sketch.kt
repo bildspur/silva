@@ -3,6 +3,7 @@ package ch.bildspur.silva
 import ch.bildspur.silva.configuration.ConfigurationController
 import ch.bildspur.silva.model.AppConfig
 import ch.bildspur.silva.model.Leaf
+import ch.bildspur.silva.network.OscController
 import ch.bildspur.silva.util.ExtendedRandom
 import ch.bildspur.silva.view.UIController
 import processing.core.PApplet
@@ -42,6 +43,8 @@ class Sketch : PApplet() {
 
     private val config = ConfigurationController()
 
+    private val osc = OscController(this)
+
     var appConfig = AppConfig()
 
     private val rnd = ExtendedRandom()
@@ -61,6 +64,7 @@ class Sketch : PApplet() {
         initAppConfig()
 
         ui.setup(g)
+        osc.setup(appConfig.oscInPort, appConfig.oscOutPort)
     }
 
     override fun draw() {
@@ -110,5 +114,10 @@ class Sketch : PApplet() {
 
     fun saveAppConfig() {
         config.saveAppConfig(appConfig)
+    }
+
+    override fun stop() {
+        super.stop()
+        osc.stop()
     }
 }

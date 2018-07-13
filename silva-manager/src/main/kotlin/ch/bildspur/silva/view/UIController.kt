@@ -73,7 +73,7 @@ class UIController(private val sketch: Sketch) {
                 .onClick {
                     sketch.saveAppConfig()
                 }
-        h += hpadding + controlHeight
+        h += vpadding + controlHeight
 
         // setup map
         mapPosition.x = padding

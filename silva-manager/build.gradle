@@ -45,7 +45,7 @@ dependencies {
     compile 'com.github.salomonbrys.kotson:kotson:2.5.0'
 
     // oscp5
-    //compile files('lib/oscP5/oscP5.jar')
+    compile files('lib/oscP5/oscP5.jar')
 }
 
 compileKotlin {
