@@ -165,6 +165,19 @@ void handleOsc(OSCMessage &msg) {
             }
         });
 
+        msg.dispatch("/silva/update", [](OSCMessage &msg) {
+            auto leafIndex = static_cast<uint8_t>(msg.getFloat(0));
+            auto distance = static_cast<uint8_t>(msg.getFloat(1));
+
+            // bound check
+            if(leafIndex >= 0 && leafIndex < tree.getSize()) {
+                // update current leaf
+                editScene.selectLeaf(leafIndex);
+                editScene.getSelectedLeaf()->setDistance(distance);
+                editScene.updateUI();
+            }
+        });
+
         msg.dispatch("/silva/selected/distance", [](OSCMessage &msg) {
             editScene.getSelectedLeaf()->setDistance(static_cast<uint8_t>(msg.getFloat(0)));
             editScene.updateUI();

@@ -51,7 +51,7 @@ class UIController(private val sketch: Sketch) {
         // setup cp5 controls
 
         // new, load, save
-        cp5.addButton("New")
+        cp5.addButton("New Config")
                 .setPosition(padding, h)
                 .setSize(controlWidth, controlHeight)
                 .onClick {
@@ -59,7 +59,7 @@ class UIController(private val sketch: Sketch) {
                     sketch.initAppConfig()
                 }
 
-        cp5.addButton("Load")
+        cp5.addButton("Load Config")
                 .setPosition(padding + (hpadding + controlWidth), h)
                 .setSize(controlWidth, controlHeight)
                 .onClick {
@@ -67,11 +67,34 @@ class UIController(private val sketch: Sketch) {
                     sketch.initAppConfig()
                 }
 
-        cp5.addButton("Save")
+        cp5.addButton("Save Config")
                 .setPosition(padding + (2 * (hpadding + controlWidth)).roundToInt(), h)
                 .setSize(controlWidth, controlHeight)
                 .onClick {
                     sketch.saveAppConfig()
+                }
+        h += vpadding + controlHeight
+
+        // new, load, save
+        cp5.addButton("Read Tree")
+                .setPosition(padding, h)
+                .setSize(controlWidth, controlHeight)
+                .onClick {
+                    sketch.treeConnection.readDataFromTree()
+                }
+
+        cp5.addButton("Write Tree")
+                .setPosition(padding + (hpadding + controlWidth), h)
+                .setSize(controlWidth, controlHeight)
+                .onClick {
+                    sketch.treeConnection.writeDataToTree()
+                }
+
+        cp5.addButton("Save Tree")
+                .setPosition(padding + (2 * (hpadding + controlWidth)).roundToInt(), h)
+                .setSize(controlWidth, controlHeight)
+                .onClick {
+                    sketch.treeConnection.saveTree()
                 }
         h += vpadding + controlHeight
 
