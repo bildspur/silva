@@ -1,5 +1,7 @@
 package ch.bildspur.silva
 
+import ch.bildspur.silva.configuration.ConfigurationController
+import ch.bildspur.silva.model.AppConfig
 import ch.bildspur.silva.model.Leaf
 import ch.bildspur.silva.view.UIController
 import processing.core.PApplet
@@ -35,9 +37,11 @@ class Sketch : PApplet() {
         }
     }
 
-    private val leafCount = 26
-
     private val ui = UIController(this)
+
+    private val config = ConfigurationController()
+
+    var appConfig = AppConfig()
 
     override fun settings() {
         size(WINDOW_WIDTH, WINDOW_HEIGHT, PConstants.P2D)
@@ -50,14 +54,20 @@ class Sketch : PApplet() {
         surface.setTitle("$NAME - $VERSION")
         surface.setIcon(loadImage("images/silva-logo-128.png"))
 
-        ui.setup(g)
+        appConfig = config.loadAppConfig()
 
+        /*
         // add leafes
-        (0 until leafCount).forEach {
+        (0 until appConfig.defaultLeafCount).forEach {
             val leaf = Leaf(it)
             leaf.position.target = PVector.random2D().mult(random(50f, 300f))
-            ui.map.leafs.add(leaf)
+            appConfig.leafs.add(leaf)
         }
+
+        config.saveAppConfig(appConfig)
+        */
+
+        ui.setup(g, appConfig)
     }
 
     override fun draw() {

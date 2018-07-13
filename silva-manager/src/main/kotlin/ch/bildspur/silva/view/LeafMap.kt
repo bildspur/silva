@@ -1,18 +1,20 @@
 package ch.bildspur.silva.view
 
 import ch.bildspur.silva.Sketch
+import ch.bildspur.silva.model.AppConfig
 import ch.bildspur.silva.model.Leaf
 import ch.bildspur.silva.util.ColorMode
 import ch.bildspur.silva.util.circularIntersect
 import ch.bildspur.silva.util.draw
-import ch.bildspur.silva.util.translate
 import processing.core.PApplet
 import processing.core.PConstants
 import processing.core.PGraphics
 import processing.core.PVector
 import kotlin.math.roundToInt
 
-class LeafMap(val canvas : PGraphics, val leafs : MutableList<Leaf> = mutableListOf()) {
+class LeafMap(val canvas : PGraphics, val appConfig : AppConfig) {
+
+    private val leafs = appConfig.leafs
 
     private val backgroundColor = ColorMode.color(42,54,59)
     private val borderColor = ColorMode.color(255)

@@ -1,6 +1,7 @@
 package ch.bildspur.silva.view
 
 import ch.bildspur.silva.Sketch
+import ch.bildspur.silva.model.AppConfig
 import ch.bildspur.silva.util.translate
 import controlP5.ControlP5
 import processing.core.PConstants
@@ -19,8 +20,11 @@ class UIController(private val parent: Sketch) {
 
     private val mapPosition = PVector()
 
-    fun setup(canvas: PGraphics) {
+    lateinit var appConfig : AppConfig
+
+    fun setup(canvas: PGraphics, appConfig : AppConfig) {
         this.canvas = canvas
+        this.appConfig = appConfig
 
         cp5 = ControlP5(parent)
         cp5.setGraphics(canvas, 0, 0)
@@ -36,7 +40,7 @@ class UIController(private val parent: Sketch) {
         mapPosition.x = padding
         mapPosition.y = h
         val mapCanvas = parent.createGraphics(canvas.width - (2 * padding).toInt(), canvas.height - (h + padding).toInt())
-        map = LeafMap(mapCanvas)
+        map = LeafMap(mapCanvas, appConfig)
     }
 
     fun render() {

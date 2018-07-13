@@ -40,6 +40,10 @@ dependencies {
     // controlp5
     compile files('lib/controlP5/controlP5.jar')
 
+    // json support
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
+    compile 'com.github.salomonbrys.kotson:kotson:2.5.0'
+
     // oscp5
     //compile files('lib/oscP5/oscP5.jar')
 }

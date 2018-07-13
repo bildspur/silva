@@ -12,3 +12,4 @@ workspace.xml
 silva-manager/.gradle
 silva-manager/.idea
 silva-manager/out
+silva-manager/config
