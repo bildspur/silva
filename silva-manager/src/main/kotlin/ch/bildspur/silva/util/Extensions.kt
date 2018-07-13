@@ -147,7 +147,7 @@ fun PVector.translate(v : PVector) : PVector
     return PVector.add(this, v)
 }
 
-fun PVector.circularIntersect(position : PVector, distance : Float) : Boolean
+fun PVector.circularIntersect(position : PVector, radius : Float) : Boolean
 {
-    return this.dist(position) <= distance
+    return this.dist(position) <= radius
 }

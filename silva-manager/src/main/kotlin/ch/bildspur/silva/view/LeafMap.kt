@@ -9,6 +9,7 @@ import ch.bildspur.silva.util.stackMatrix
 import processing.core.PConstants
 import processing.core.PGraphics
 import processing.core.PVector
+import processing.event.MouseEvent
 
 class LeafMap(val canvas : PGraphics, val leafs : MutableList<Leaf> = mutableListOf()) {
 
@@ -28,6 +29,8 @@ class LeafMap(val canvas : PGraphics, val leafs : MutableList<Leaf> = mutableLis
     private val infoTextSize = 14f
 
     private val font = Sketch.instance.createFont("Helvetica", 100f)
+
+    private var mousePosition = PVector()
 
     fun render()
     {
@@ -73,7 +76,10 @@ class LeafMap(val canvas : PGraphics, val leafs : MutableList<Leaf> = mutableLis
             g.fill(leafColor)
 
         // draw leaf
-        g.stroke(leafBorderColor)
+        if(leaf.location.circularIntersect(mousePosition, leafSize / 2f))
+            g.stroke(255)
+            else
+            g.stroke(leafBorderColor)
         g.ellipse(leaf.location.x, leaf.location.y, leafSize, leafSize)
 
         // draw text
@@ -85,20 +91,27 @@ class LeafMap(val canvas : PGraphics, val leafs : MutableList<Leaf> = mutableLis
 
     private fun pickLeafes(position : PVector) : List<Leaf>
     {
-        return leafs.filter { it.location.circularIntersect(position, leafSize) }
+        return leafs.filter { it.location.circularIntersect(position, leafSize / 2f) }
     }
 
-    fun mouseMove(position: PVector)
+    fun mousePressed(position : PVector)
     {
+        // check if deselect
+        val picked = pickLeafes(position)
 
+        leafs.forEach { it.selected = false }
+
+        // select
+        if(picked.isNotEmpty())
+            picked.last().selected = true
     }
 
-    fun mouseDown(position : PVector)
+    fun mouseMoved(position: PVector)
     {
-
+        mousePosition = position
     }
 
-    fun mouseUp(position : PVector)
+    fun mouseReleased(position : PVector)
     {
 
     }

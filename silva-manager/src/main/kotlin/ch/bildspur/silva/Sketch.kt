@@ -6,6 +6,7 @@ import processing.core.PApplet
 import processing.core.PConstants
 import processing.core.PImage
 import processing.core.PVector
+import processing.event.MouseEvent
 
 
 /**
@@ -69,5 +70,17 @@ class Sketch : PApplet() {
     fun run()
     {
         this.runSketch()
+    }
+
+    override fun mousePressed() {
+        ui.mousePressed(PVector(mouseX.toFloat(), mouseY.toFloat()))
+    }
+
+    override fun mouseMoved() {
+        ui.mouseMoved(PVector(mouseX.toFloat(), mouseY.toFloat()))
+    }
+
+    override fun mouseReleased() {
+        ui.mouseReleased(PVector(mouseX.toFloat(), mouseY.toFloat()))
     }
 }
