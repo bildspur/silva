@@ -9,3 +9,6 @@ cmake-build-debug
 .idea/vcs.xml
 workspace.xml
 .idea/codeStyles
+silva-manager/.gradle
+silva-manager/.idea
+silva-manager/out
