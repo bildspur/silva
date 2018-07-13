@@ -21,17 +21,17 @@ class TreeConnection(val sketch : Sketch,
     }
 
     fun readDataFromTree() {
-
+        // not implemented
     }
 
     fun writeDataToTree() {
         isRunning = true
         thread {
             println("writing data to tree...")
-            sketch.appConfig.leafs.forEachIndexed {i, leaf ->
-                println("updating $i with distance ${leaf.distance}...")
+            sketch.appConfig.leafs.forEach { leaf ->
+                println("updating ${leaf.index} with distance ${leaf.distance}...")
                 leaf.selected = true
-                osc.sendMessage("/silva/update", i.toFloat(), leaf.distance.toFloat())
+                osc.sendMessage("/silva/update", leaf.index.toFloat(), leaf.distance.toFloat())
                 Thread.sleep(500)
                 leaf.selected = false
             }

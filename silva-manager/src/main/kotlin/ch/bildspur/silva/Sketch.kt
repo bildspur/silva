@@ -109,6 +109,14 @@ class Sketch : PApplet() {
     {
         if(ui.isInitialized)
             ui.map.appConfig = appConfig
+
+        // add listener
+        appConfig.leafs.forEach {
+            it.onSelected += {
+                println("send selecting ${it.index}...")
+                osc.sendMessage("/silva/select", it.index.toFloat())
+            }
+        }
     }
 
     fun createNewProject() {
