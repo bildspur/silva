@@ -4,9 +4,7 @@ import ch.bildspur.silva.model.Leaf
 import ch.bildspur.silva.view.UIController
 import processing.core.PApplet
 import processing.core.PConstants
-import processing.core.PImage
 import processing.core.PVector
-import processing.event.MouseEvent
 
 
 /**
@@ -57,7 +55,7 @@ class Sketch : PApplet() {
         // add leafes
         (0 until leafCount).forEach {
             val leaf = Leaf(it)
-            leaf.location.target = PVector.random2D().mult(250f)
+            leaf.position.target = PVector.random2D().mult(random(50f, 300f))
             ui.map.leafs.add(leaf)
         }
     }

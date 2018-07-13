@@ -5,11 +5,11 @@ import ch.bildspur.silva.model.Leaf
 import ch.bildspur.silva.util.ColorMode
 import ch.bildspur.silva.util.circularIntersect
 import ch.bildspur.silva.util.draw
-import ch.bildspur.silva.util.stackMatrix
+import processing.core.PApplet
 import processing.core.PConstants
 import processing.core.PGraphics
 import processing.core.PVector
-import processing.event.MouseEvent
+import kotlin.math.roundToInt
 
 class LeafMap(val canvas : PGraphics, val leafs : MutableList<Leaf> = mutableListOf()) {
 
@@ -18,6 +18,7 @@ class LeafMap(val canvas : PGraphics, val leafs : MutableList<Leaf> = mutableLis
 
     private val centerTrunkColor = ColorMode.color(254,206,171)
     private val centerTrunkSize = 50f
+    private val centerTrunkPosition = PVector(0f, 0f)
 
     private val leafColor = ColorMode.color(255,132,124)
     private val selectedLeafColor = ColorMode.color(232,74,95)
@@ -49,7 +50,7 @@ class LeafMap(val canvas : PGraphics, val leafs : MutableList<Leaf> = mutableLis
             it.fill(centerTrunkColor)
             it.noStroke()
             it.ellipseMode(PConstants.CENTER)
-            it.ellipse(0f,0f, centerTrunkSize, centerTrunkSize)
+            it.ellipse(centerTrunkPosition.x, centerTrunkPosition.y, centerTrunkSize, centerTrunkSize)
 
             // draw leafs
             // update leafes
@@ -66,38 +67,75 @@ class LeafMap(val canvas : PGraphics, val leafs : MutableList<Leaf> = mutableLis
             canvas.stroke(borderColor)
             canvas.rect(0f, 0f, (it.width - 1).toFloat(), (it.height - 1).toFloat())
         }
+
+        updateLeafDistances()
     }
 
     private fun drawLeaf(g : PGraphics, leaf : Leaf)
     {
+        // show info
+        if(leaf.selected)
+        {
+            g.noFill()
+            g.stroke(infoColor)
+
+            val radius = leaf.position.dist(centerTrunkPosition)
+            val centerPoint = PVector.lerp(leaf.position, centerTrunkPosition, 0.5f)
+
+            // draw circle
+            g.ellipse(0f, 0f, radius * 2f, radius * 2f)
+
+            // draw line
+            g.line(centerTrunkPosition.x, centerTrunkPosition.y, leaf.position.x, leaf.position.y)
+
+            // draw text
+            g.fill(255f)
+            g.textAlign(PConstants.CENTER, PConstants.CENTER)
+            g.textSize(infoTextSize)
+            g.text(leaf.distance, centerPoint.x, centerPoint.y)
+        }
+
         if(leaf.selected)
             g.fill(selectedLeafColor)
         else
             g.fill(leafColor)
 
         // draw leaf
-        if(leaf.location.circularIntersect(mousePosition, leafSize / 2f))
+        if(leaf.position.circularIntersect(mousePosition, leafSize / 2f))
             g.stroke(255)
             else
             g.stroke(leafBorderColor)
-        g.ellipse(leaf.location.x, leaf.location.y, leafSize, leafSize)
+        g.ellipse(leaf.position.x, leaf.position.y, leafSize, leafSize)
 
         // draw text
         g.fill(255f)
         g.textAlign(PConstants.CENTER, PConstants.CENTER)
         g.textSize(leafTextSize)
-        g.text(leaf.index, leaf.location.x, leaf.location.y)
+        g.text(leaf.index, leaf.position.x, leaf.position.y)
     }
 
-    private fun pickLeafes(position : PVector) : List<Leaf>
+    private fun pickLeafs(position : PVector) : List<Leaf>
     {
-        return leafs.filter { it.location.circularIntersect(position, leafSize / 2f) }
+        return leafs.filter { it.position.circularIntersect(position, leafSize / 2f) }
+    }
+
+    private fun updateLeafDistances()
+    {
+        if(leafs.isEmpty())
+            return
+
+        val maxDistance = leafs.map { it.position.dist(centerTrunkPosition) }.max()!!
+
+        leafs.forEach {
+            val distance = it.position.dist(centerTrunkPosition)
+            it.distance = PApplet.map(distance, 0f, maxDistance, 0f, 255f).roundToInt()
+        }
     }
 
     fun mousePressed(position : PVector)
     {
         // check if deselect
-        val picked = pickLeafes(position)
+        val picked = pickLeafs(position)
 
         leafs.forEach { it.selected = false }
 
