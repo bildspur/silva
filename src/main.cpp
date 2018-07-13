@@ -156,8 +156,13 @@ void handleOsc(OSCMessage &msg) {
         });
 
         msg.dispatch("/silva/select", [](OSCMessage &msg) {
-            editScene.selectLeaf(static_cast<uint8_t>(msg.getFloat(0)));
-            editScene.updateUI();
+            auto leafIndex = static_cast<uint8_t>(msg.getFloat(0));
+
+            // bound check
+            if(leafIndex >= 0 && leafIndex < tree.getSize()) {
+                editScene.selectLeaf(leafIndex);
+                editScene.updateUI();
+            }
         });
 
         msg.dispatch("/silva/selected/distance", [](OSCMessage &msg) {
