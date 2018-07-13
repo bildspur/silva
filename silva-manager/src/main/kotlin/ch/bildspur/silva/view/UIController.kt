@@ -7,8 +7,13 @@ import processing.core.PGraphics
 
 class UIController(private val parent : Sketch) {
 
-    lateinit var cp5 : ControlP5
-    lateinit var canvas : PGraphics
+    private lateinit var cp5 : ControlP5
+    private lateinit var canvas : PGraphics
+
+    private lateinit var map : LeafMap
+
+    private val padding = 20f
+    private var h = padding + 140f
 
     fun setup(canvas : PGraphics)
     {
@@ -23,7 +28,8 @@ class UIController(private val parent : Sketch) {
 
     private fun setupControls()
     {
-
+        val mapCanvas = parent.createGraphics(canvas.width - (2 * padding).toInt(), canvas.height - (h + padding).toInt())
+        map = LeafMap(mapCanvas)
     }
 
     fun render()
@@ -32,9 +38,11 @@ class UIController(private val parent : Sketch) {
         canvas.fill(255)
         canvas.textSize(20f)
         canvas.textAlign(PConstants.LEFT, PConstants.CENTER)
-        canvas.text(Sketch.NAME, 20f, 20f)
+        canvas.text(Sketch.NAME, padding, padding)
 
         // render controls
+        map.render()
+        canvas.image(map.canvas, padding, h)
         cp5.draw()
     }
 }

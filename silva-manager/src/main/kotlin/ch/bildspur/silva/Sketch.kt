@@ -12,9 +12,9 @@ import processing.core.PImage
 class Sketch : PApplet() {
     companion object {
         @JvmStatic
-        val WINDOW_WIDTH = 1280
+        val WINDOW_WIDTH = 800
         @JvmStatic
-        val WINDOW_HEIGHT = 800
+        val WINDOW_HEIGHT = 1024
 
         @JvmStatic
         val NAME = "Silva Manager"
@@ -31,10 +31,11 @@ class Sketch : PApplet() {
         }
     }
 
-    val ui = UIController(this)
+    private val ui = UIController(this)
 
     override fun settings() {
-        size(WINDOW_WIDTH, WINDOW_HEIGHT, PConstants.FX2D)
+        size(WINDOW_WIDTH, WINDOW_HEIGHT, PConstants.P2D)
+        pixelDensity = 2
     }
 
     override fun setup() {
