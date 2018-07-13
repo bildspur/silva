@@ -3,7 +3,6 @@ package ch.bildspur.silva.configuration
 import ch.bildspur.silva.Sketch
 import ch.bildspur.silva.model.AppConfig
 import ch.bildspur.silva.model.Leaf
-import ch.bildspur.silva.model.easing.EasingVector
 import com.github.salomonbrys.kotson.fromJson
 import com.github.salomonbrys.kotson.get
 import com.google.gson.*

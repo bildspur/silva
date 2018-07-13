@@ -2,33 +2,49 @@ package ch.bildspur.silva.view
 
 import ch.bildspur.silva.Sketch
 import ch.bildspur.silva.model.AppConfig
+import ch.bildspur.silva.model.Leaf
+import ch.bildspur.silva.util.ColorMode
+import ch.bildspur.silva.util.ExtendedRandom
 import ch.bildspur.silva.util.translate
 import controlP5.ControlP5
 import processing.core.PConstants
 import processing.core.PGraphics
 import processing.core.PVector
+import kotlin.math.roundToInt
 
-class UIController(private val parent: Sketch) {
+class UIController(private val sketch: Sketch) {
 
     private lateinit var cp5: ControlP5
     private lateinit var canvas: PGraphics
 
+    private val rnd = ExtendedRandom()
+
     lateinit var map: LeafMap
 
     private val padding = 20f
-    private var h = padding + 140f
+    private val vpadding = 10f
+    private val hpadding = 10f
+    private val controlHeight = 25
+    private val controlWidth = 100
+
+    private var h = padding + 30f
 
     private val mapPosition = PVector()
 
-    lateinit var appConfig : AppConfig
-
-    fun setup(canvas: PGraphics, appConfig : AppConfig) {
+    fun setup(canvas: PGraphics) {
         this.canvas = canvas
-        this.appConfig = appConfig
 
-        cp5 = ControlP5(parent)
+        val font = Sketch.instance.createFont("Helvetica", 100f)
+
+        cp5 = ControlP5(sketch)
         cp5.setGraphics(canvas, 0, 0)
         cp5.isAutoDraw = false
+
+        // change the original colors
+        cp5.setColorForeground(ColorMode.color(255,132,124))
+        cp5.setColorBackground(ColorMode.color(42,54,59))
+        cp5.setFont(font, 14)
+        cp5.setColorActive(ColorMode.color(255,132,124))
 
         setupControls()
     }
@@ -36,11 +52,40 @@ class UIController(private val parent: Sketch) {
     private fun setupControls() {
         // setup cp5 controls
 
+        // new, load, save
+        cp5.addButton("New")
+                .setPosition(padding, h)
+                .setSize(controlWidth, controlHeight)
+                .onClick {
+                    sketch.appConfig.leafs.clear()
+                    (0 until sketch.appConfig.defaultLeafCount).forEach {
+                        val leaf = Leaf(it)
+                        leaf.position.target = PVector.random2D().mult(rnd.randomFloat(50f, 300f))
+                        sketch.appConfig.leafs.add(leaf)
+                    }
+                }
+
+        cp5.addButton("Load")
+                .setPosition(padding + (hpadding + controlWidth), h)
+                .setSize(controlWidth, controlHeight)
+                .onClick {
+                    sketch.appConfig = sketch.config.loadAppConfig()
+                    map.appConfig = sketch.appConfig
+                }
+
+        cp5.addButton("Save")
+                .setPosition(padding + (2 * (hpadding + controlWidth)).roundToInt(), h)
+                .setSize(controlWidth, controlHeight)
+                .onClick {
+                    sketch.config.saveAppConfig(sketch.appConfig)
+                }
+        h += hpadding + controlHeight
+
         // setup map
         mapPosition.x = padding
         mapPosition.y = h
-        val mapCanvas = parent.createGraphics(canvas.width - (2 * padding).toInt(), canvas.height - (h + padding).toInt())
-        map = LeafMap(mapCanvas, appConfig)
+        val mapCanvas = sketch.createGraphics(canvas.width - (2 * padding).toInt(), canvas.height - (h + padding).toInt())
+        map = LeafMap(mapCanvas, sketch.appConfig)
     }
 
     fun render() {

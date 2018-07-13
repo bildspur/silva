@@ -12,10 +12,7 @@ import processing.core.PGraphics
 import processing.core.PVector
 import kotlin.math.roundToInt
 
-class LeafMap(val canvas : PGraphics, val appConfig : AppConfig) {
-
-    private val leafs = appConfig.leafs
-
+class LeafMap(val canvas : PGraphics, var appConfig : AppConfig) {
     private val backgroundColor = ColorMode.color(42,54,59)
     private val borderColor = ColorMode.color(255)
 
@@ -57,7 +54,7 @@ class LeafMap(val canvas : PGraphics, val appConfig : AppConfig) {
 
             // draw leafs
             // update leafes
-            leafs.forEach { leaf ->
+            appConfig.leafs.forEach { leaf ->
                 leaf.update()
                 drawLeaf(it, leaf)
             }
@@ -119,17 +116,17 @@ class LeafMap(val canvas : PGraphics, val appConfig : AppConfig) {
 
     private fun pickLeafs(position : PVector) : List<Leaf>
     {
-        return leafs.filter { it.position.circularIntersect(position, leafSize / 2f) }
+        return appConfig.leafs.filter { it.position.circularIntersect(position, leafSize / 2f) }
     }
 
     private fun updateLeafDistances()
     {
-        if(leafs.isEmpty())
+        if(appConfig.leafs.isEmpty())
             return
 
-        val maxDistance = leafs.map { it.position.dist(centerTrunkPosition) }.max()!!
+        val maxDistance = appConfig.leafs.map { it.position.dist(centerTrunkPosition) }.max()!!
 
-        leafs.forEach {
+        appConfig.leafs.forEach {
             val distance = it.position.dist(centerTrunkPosition)
             it.distance = PApplet.map(distance, 0f, maxDistance, 0f, 255f).roundToInt()
         }
@@ -140,7 +137,7 @@ class LeafMap(val canvas : PGraphics, val appConfig : AppConfig) {
         // check if deselect
         val picked = pickLeafs(position)
 
-        leafs.forEach { it.selected = false }
+        appConfig.leafs.forEach { it.selected = false }
 
         // select
         if(picked.isNotEmpty()) {
@@ -156,7 +153,7 @@ class LeafMap(val canvas : PGraphics, val appConfig : AppConfig) {
 
     fun mouseDragged(position : PVector)
     {
-        leafs.filter { it.selected }.forEach { it.position.target = position }
+        appConfig.leafs.filter { it.selected }.forEach { it.position.target = position }
     }
 
     fun mouseReleased(position : PVector)

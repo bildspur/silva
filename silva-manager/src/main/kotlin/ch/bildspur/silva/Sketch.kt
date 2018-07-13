@@ -39,7 +39,7 @@ class Sketch : PApplet() {
 
     private val ui = UIController(this)
 
-    private val config = ConfigurationController()
+    val config = ConfigurationController()
 
     var appConfig = AppConfig()
 
@@ -56,18 +56,7 @@ class Sketch : PApplet() {
 
         appConfig = config.loadAppConfig()
 
-        /*
-        // add leafes
-        (0 until appConfig.defaultLeafCount).forEach {
-            val leaf = Leaf(it)
-            leaf.position.target = PVector.random2D().mult(random(50f, 300f))
-            appConfig.leafs.add(leaf)
-        }
-
-        config.saveAppConfig(appConfig)
-        */
-
-        ui.setup(g, appConfig)
+        ui.setup(g)
     }
 
     override fun draw() {
