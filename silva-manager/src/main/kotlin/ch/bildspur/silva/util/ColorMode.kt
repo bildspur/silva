@@ -31,8 +31,7 @@ object ColorMode {
     internal lateinit var lerpColorHSB2: FloatArray
 
     init {
-        colorMode(1, 1.0f)
-        colorMode(PConstants.HSB, 360f, 100f, 100f)
+        colorMode(PConstants.RGB, 255f)
     }
 
     fun style(s: PStyle) {

@@ -10,7 +10,7 @@ class UIController(private val parent : Sketch) {
     private lateinit var cp5 : ControlP5
     private lateinit var canvas : PGraphics
 
-    private lateinit var map : LeafMap
+    lateinit var map : LeafMap
 
     private val padding = 20f
     private var h = padding + 140f

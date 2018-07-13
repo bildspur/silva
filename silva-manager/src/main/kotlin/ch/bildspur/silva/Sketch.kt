@@ -1,9 +1,11 @@
 package ch.bildspur.silva
 
+import ch.bildspur.silva.model.Leaf
 import ch.bildspur.silva.view.UIController
 import processing.core.PApplet
 import processing.core.PConstants
 import processing.core.PImage
+import processing.core.PVector
 
 
 /**
@@ -26,16 +28,23 @@ class Sketch : PApplet() {
         val VERSION = "0.1"
 
         @JvmStatic
+        lateinit var instance: Sketch
+
+        @JvmStatic
         fun map(value: Double, start1: Double, stop1: Double, start2: Double, stop2: Double): Double {
             return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1))
         }
     }
+
+    private val leafCount = 26
 
     private val ui = UIController(this)
 
     override fun settings() {
         size(WINDOW_WIDTH, WINDOW_HEIGHT, PConstants.P2D)
         pixelDensity = 2
+
+        instance = this
     }
 
     override fun setup() {
@@ -43,6 +52,13 @@ class Sketch : PApplet() {
         surface.setIcon(loadImage("images/silva-logo-128.png"))
 
         ui.setup(g)
+
+        // add leafes
+        (0 until leafCount).forEach {
+            val leaf = Leaf(it)
+            leaf.location.target = PVector.random2D().mult(250f)
+            ui.map.leafs.add(leaf)
+        }
     }
 
     override fun draw() {

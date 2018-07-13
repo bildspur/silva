@@ -8,8 +8,8 @@ class Leaf(val index : Int, var distance : Int = 0) {
 
     var selected = false
 
-    fun render(canvas : PGraphics)
+    fun update()
     {
-
+        location.update()
     }
 }
