@@ -113,7 +113,7 @@ class Sketch : PApplet() {
         // add listener
         appConfig.leafs.forEach {
             it.onSelected += {
-                println("send selecting ${it.index}...")
+                println("selecting ${it.index}...")
                 osc.sendMessage("/silva/select", it.index.toFloat())
             }
         }
