@@ -155,6 +155,11 @@ void handleOsc(OSCMessage &msg) {
             editScene.updateUI();
         });
 
+        msg.dispatch("/silva/select", [](OSCMessage &msg) {
+            editScene.selectLeaf(static_cast<uint8_t>(msg.getFloat(0)));
+            editScene.updateUI();
+        });
+
         msg.dispatch("/silva/selected/distance", [](OSCMessage &msg) {
             editScene.getSelectedLeaf()->setDistance(static_cast<uint8_t>(msg.getFloat(0)));
             editScene.updateUI();
