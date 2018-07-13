@@ -76,25 +76,48 @@ class UIController(private val sketch: Sketch) {
         h += vpadding + controlHeight
 
         // new, load, save
-        cp5.addButton("Read Tree")
+        cp5.addButton("Read TreeInformation")
                 .setPosition(padding, h)
                 .setSize(controlWidth, controlHeight)
                 .onClick {
                     sketch.treeConnection.readDataFromTree()
                 }
 
-        cp5.addButton("Write Tree")
+        cp5.addButton("Write TreeInformation")
                 .setPosition(padding + (hpadding + controlWidth), h)
                 .setSize(controlWidth, controlHeight)
                 .onClick {
                     sketch.treeConnection.writeDataToTree()
                 }
 
-        cp5.addButton("Save Tree")
+        cp5.addButton("Save TreeInformation")
                 .setPosition(padding + (2 * (hpadding + controlWidth)).roundToInt(), h)
                 .setSize(controlWidth, controlHeight)
                 .onClick {
                     sketch.treeConnection.saveTree()
+                }
+        h += vpadding + controlHeight
+
+        // new, load, save
+        cp5.addButton("TreeInformation Mode")
+                .setPosition(padding, h)
+                .setSize(controlWidth, controlHeight)
+                .onClick {
+                    sketch.osc.sendMessage("/silva/scene/tree", 0f)
+                }
+
+        cp5.addButton("Edit Mode")
+                .setPosition(padding + (hpadding + controlWidth), h)
+                .setSize(controlWidth, controlHeight)
+                .onClick {
+                    sketch.osc.sendMessage("/silva/scene/edit", 0f)
+                }
+
+        cp5.addButton("Stars Mode")
+                .setPosition(padding + (2 * (hpadding + controlWidth)).roundToInt(), h)
+                .setSize(controlWidth, controlHeight)
+                .onClick {
+                    sketch.osc.sendMessage("/silva/scene/stars", 0f)
                 }
         h += vpadding + controlHeight
 
@@ -111,6 +134,9 @@ class UIController(private val sketch: Sketch) {
         canvas.textSize(20f)
         canvas.textAlign(PConstants.LEFT, PConstants.CENTER)
         canvas.text(Sketch.NAME, padding, padding)
+
+        // render information
+
 
         // render controls
         map.render()

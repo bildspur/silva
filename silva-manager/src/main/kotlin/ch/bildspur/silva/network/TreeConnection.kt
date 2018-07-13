@@ -1,12 +1,15 @@
 package ch.bildspur.silva.network
 
 import ch.bildspur.silva.Sketch
+import ch.bildspur.silva.model.TreeInformation
 import oscP5.OscMessage
+import java.time.LocalDateTime
 import kotlin.concurrent.thread
 
 class TreeConnection(val sketch : Sketch,
                      val osc : OscController) {
 
+    val treeInfo = TreeInformation()
 
     @Volatile var isRunning = false
 
@@ -17,6 +20,23 @@ class TreeConnection(val sketch : Sketch,
         osc.onOscMessage += {
             if(recordMessages)
                 messageBuffer.add(it)
+
+            updateTreeInformation(it)
+        }
+    }
+
+    fun updateTreeInformation(msg : OscMessage)
+    {
+        when (msg.addrPattern()) {
+            "/silva/scene/active" -> {
+                treeInfo.activeScene = msg.arguments()[0] as String
+                treeInfo.lastHeartBeat = LocalDateTime.now()
+            }
+
+            "/silva/debug/hic" -> treeInfo.hic = msg.arguments()[0] as Float
+            "/silva/debug/life" -> treeInfo.life = msg.arguments()[0] as Float
+            "/silva/debug/lux" -> treeInfo.lux = msg.arguments()[0] as Float
+            "/silva/debug/threshold" -> treeInfo.threshold = msg.arguments()[0] as Float
         }
     }
 

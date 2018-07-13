@@ -3,6 +3,7 @@ package ch.bildspur.silva
 import ch.bildspur.silva.configuration.ConfigurationController
 import ch.bildspur.silva.model.AppConfig
 import ch.bildspur.silva.model.Leaf
+import ch.bildspur.silva.model.TreeInformation
 import ch.bildspur.silva.network.OscController
 import ch.bildspur.silva.network.TreeConnection
 import ch.bildspur.silva.util.ExtendedRandom
@@ -44,7 +45,7 @@ class Sketch : PApplet() {
 
     private val config = ConfigurationController()
 
-    private val osc = OscController(this)
+    val osc = OscController(this)
 
     val treeConnection = TreeConnection(this, osc)
 
