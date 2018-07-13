@@ -4,7 +4,7 @@ import ch.bildspur.silva.event.Event
 import ch.bildspur.silva.model.easing.EasingVector
 import com.google.gson.annotations.Expose
 
-class Leaf(@Expose val index : Int,
+class Leaf(@Expose val index : Int = 0,
            @Expose var distance : Int = 0,
            @Expose val position : EasingVector = EasingVector()) {
 
