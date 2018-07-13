@@ -59,6 +59,14 @@ class UIController(private val parent: Sketch) {
         map.mousePressed(mapToMap(position))
     }
 
+    fun mouseDragged(position : PVector)
+    {
+        if(!inMapBounds(position))
+            return
+
+        map.mouseDragged(mapToMap(position))
+    }
+
     fun mouseMoved(position : PVector) {
         if(!inMapBounds(position))
             return

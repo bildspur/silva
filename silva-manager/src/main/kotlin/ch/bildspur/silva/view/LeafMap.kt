@@ -5,6 +5,7 @@ import ch.bildspur.silva.model.Leaf
 import ch.bildspur.silva.util.ColorMode
 import ch.bildspur.silva.util.circularIntersect
 import ch.bildspur.silva.util.draw
+import ch.bildspur.silva.util.translate
 import processing.core.PApplet
 import processing.core.PConstants
 import processing.core.PGraphics
@@ -140,13 +141,20 @@ class LeafMap(val canvas : PGraphics, val leafs : MutableList<Leaf> = mutableLis
         leafs.forEach { it.selected = false }
 
         // select
-        if(picked.isNotEmpty())
-            picked.last().selected = true
+        if(picked.isNotEmpty()) {
+            val leaf = picked.last()
+            leaf.onSelected.invoke(leaf)
+        }
     }
 
     fun mouseMoved(position: PVector)
     {
         mousePosition = position
+    }
+
+    fun mouseDragged(position : PVector)
+    {
+        leafs.filter { it.selected }.forEach { it.position.target = position }
     }
 
     fun mouseReleased(position : PVector)

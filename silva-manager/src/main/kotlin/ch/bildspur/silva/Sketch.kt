@@ -70,6 +70,10 @@ class Sketch : PApplet() {
         this.runSketch()
     }
 
+    override fun mouseDragged() {
+        ui.mouseDragged(PVector(mouseX.toFloat(), mouseY.toFloat()))
+    }
+
     override fun mousePressed() {
         ui.mousePressed(PVector(mouseX.toFloat(), mouseY.toFloat()))
     }
