@@ -2,11 +2,16 @@ package ch.bildspur.silva.view
 
 import ch.bildspur.silva.Sketch
 import ch.bildspur.silva.util.ColorMode
+import ch.bildspur.silva.util.format
 import ch.bildspur.silva.util.translate
 import controlP5.ControlP5
 import processing.core.PConstants
 import processing.core.PGraphics
 import processing.core.PVector
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.LocalTime
+import javax.xml.datatype.DatatypeConstants.SECONDS
 import kotlin.math.roundToInt
 
 class UIController(private val sketch: Sketch) {
@@ -76,21 +81,21 @@ class UIController(private val sketch: Sketch) {
         h += vpadding + controlHeight
 
         // new, load, save
-        cp5.addButton("Read TreeInformation")
+        cp5.addButton("Read Tree")
                 .setPosition(padding, h)
                 .setSize(controlWidth, controlHeight)
                 .onClick {
                     sketch.treeConnection.readDataFromTree()
                 }
 
-        cp5.addButton("Write TreeInformation")
+        cp5.addButton("Write Tree")
                 .setPosition(padding + (hpadding + controlWidth), h)
                 .setSize(controlWidth, controlHeight)
                 .onClick {
                     sketch.treeConnection.writeDataToTree()
                 }
 
-        cp5.addButton("Save TreeInformation")
+        cp5.addButton("Save Tree")
                 .setPosition(padding + (2 * (hpadding + controlWidth)).roundToInt(), h)
                 .setSize(controlWidth, controlHeight)
                 .onClick {
@@ -99,7 +104,7 @@ class UIController(private val sketch: Sketch) {
         h += vpadding + controlHeight
 
         // new, load, save
-        cp5.addButton("TreeInformation Mode")
+        cp5.addButton("Tree Mode")
                 .setPosition(padding, h)
                 .setSize(controlWidth, controlHeight)
                 .onClick {
@@ -133,10 +138,24 @@ class UIController(private val sketch: Sketch) {
         canvas.fill(255)
         canvas.textSize(20f)
         canvas.textAlign(PConstants.LEFT, PConstants.CENTER)
-        canvas.text(Sketch.NAME, padding, padding)
+        canvas.text(Sketch.NAME.toUpperCase(), padding, padding)
 
         // render information
+        val info = sketch.treeConnection.treeInfo
+        val sh = 80f
+        val sv = canvas.width / 2f + 20f
 
+        val heartBeat = Duration.between(info.lastHeartBeat, LocalDateTime.now())
+
+        canvas.fill(255)
+        canvas.textSize(14f)
+        canvas.textAlign(PConstants.LEFT, PConstants.CENTER)
+        canvas.text("Active Scene: ${info.activeScene}\n" +
+                "Last Update: ${if(heartBeat.seconds < 120) "${heartBeat.seconds} seconds ago." else "-"}\n" +
+                "HIC: ${info.hic.format(2)}\n" +
+                "LUX: ${info.lux}\n" +
+                "Life: ${info.life}\n" +
+                "Threshold: ${info.threshold}", sv, sh)
 
         // render controls
         map.render()
