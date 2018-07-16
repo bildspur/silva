@@ -9,9 +9,9 @@ class TreeInformation {
 
     var hic = -1f
 
-    var life = -1f
+    var life = -1
 
-    var lux = -1f
+    var lux = -1
 
-    var threshold = -1f
+    var threshold = -1
 }

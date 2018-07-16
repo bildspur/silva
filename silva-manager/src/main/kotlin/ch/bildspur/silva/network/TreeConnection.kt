@@ -16,6 +16,9 @@ class TreeConnection(val sketch : Sketch,
     @Volatile private var recordMessages = false
     val messageBuffer = mutableListOf<OscMessage>()
 
+    @Volatile var isRefresherRunning = false
+    lateinit var refresherThread : Thread
+
     init {
         osc.onOscMessage += {
             if(recordMessages)
@@ -34,9 +37,9 @@ class TreeConnection(val sketch : Sketch,
             }
 
             "/silva/debug/hic" -> treeInfo.hic = msg.arguments()[0] as Float
-            "/silva/debug/life" -> treeInfo.life = msg.arguments()[0] as Float
-            "/silva/debug/lux" -> treeInfo.lux = msg.arguments()[0] as Float
-            "/silva/debug/threshold" -> treeInfo.threshold = msg.arguments()[0] as Float
+            "/silva/debug/life" -> treeInfo.life = msg.arguments()[0] as Int
+            "/silva/debug/lux" -> treeInfo.lux = msg.arguments()[0] as Int
+            "/silva/debug/threshold" -> treeInfo.threshold = msg.arguments()[0] as Int
         }
     }
 
@@ -69,5 +72,22 @@ class TreeConnection(val sketch : Sketch,
     {
         println("saving configuration...")
         osc.sendMessage("/silva/save", 0f)
+    }
+
+    fun startRefresher()
+    {
+        isRefresherRunning = true
+        refresherThread = thread {
+            while(isRefresherRunning) {
+                osc.sendMessage("/silva/debug/refresh", 0f)
+                Thread.sleep(3000)
+            }
+        }
+    }
+
+    fun stopRefresher()
+    {
+        isRefresherRunning = false
+        refresherThread.join(5000)
     }
 }

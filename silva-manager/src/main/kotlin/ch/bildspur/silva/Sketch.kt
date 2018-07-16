@@ -69,6 +69,8 @@ class Sketch : PApplet() {
 
         ui.setup(g)
         osc.setup(appConfig.oscInPort, appConfig.oscOutPort)
+
+        treeConnection.startRefresher()
     }
 
     override fun draw() {
@@ -79,6 +81,7 @@ class Sketch : PApplet() {
     override fun stop() {
         super.stop()
         osc.stop()
+        treeConnection.stopRefresher()
     }
 
     fun run()

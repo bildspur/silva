@@ -197,6 +197,7 @@ void sendHeartbeat() {
     {
         Serial.print("[AC] State: ");
         Serial.print(airConditioner.getState());
+
         Serial.print(" Temperature: ");
         Serial.println(airConditioner.getHeatIndex());
 
