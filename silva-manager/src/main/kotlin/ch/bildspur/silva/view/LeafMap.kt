@@ -128,7 +128,7 @@ class LeafMap(val canvas : PGraphics, var appConfig : AppConfig) {
 
         appConfig.leafs.forEach {
             val distance = it.position.dist(centerTrunkPosition)
-            it.distance = PApplet.map(distance, 0f, maxDistance, 0f, 255f).roundToInt()
+            it.distance = PApplet.map(distance, 0f, maxDistance, 0f, 254f).roundToInt()
         }
     }
 
